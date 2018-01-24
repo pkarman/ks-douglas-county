@@ -1,0 +1,2 @@
+json:
+	bin/build-json

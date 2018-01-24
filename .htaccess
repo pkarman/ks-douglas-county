@@ -1,0 +1,2 @@
+RewriteRule /bin - [R=404,L]
+RewriteRule Makefile - [R=404,L]
