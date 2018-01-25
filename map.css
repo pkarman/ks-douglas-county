@@ -14,9 +14,16 @@
   border: 1px solid #ddd;
   padding: 1em;
   margin: 1em;
-  min-width: 50px;
+  min-width: 260px;
   max-width: 30%;
 }
+
+@media screen and (max-width: 600px) {
+  #details {
+    min-width: 260px;
+  }
+}
+
 #find {
   margin-left: 2em;
 }
