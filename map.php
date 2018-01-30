@@ -25,12 +25,12 @@
 
 <nav class="menu">
  <ul>
-  <li><a href="./">Home</a></li>
+  <li><a href="http://douglascountydems.org/">Douglas County Democrats</a></li>
  </ul>
 </nav>
 
 <div id='about'>
-<h1>Douglas County, Kansas - Democratic Party Precinct Map</h1>
+<h1>Precinct Map</h1>
 </div>
 
 <div id='map'></div>
@@ -187,7 +187,7 @@
   };
 
   info.update = function (props) {
-    this._div.innerHTML = '<h4>Precinct</h4>' +  (props ?  (props.NAME || props.PRECINCT || props.name) : 'Hover over a precinct');
+    this._div.innerHTML = '<h4>Precinct</h4>' +  (props ?  (props.NAME || props.PRECINCT || props.name) : 'Click on a precinct');
   };
 
   info.addTo(map);
