@@ -47,8 +47,32 @@
   });
 
   var persons_for_precinct = function(props) {
-    console.log(props);
+    //console.log(props);
     var p = [];
+    var precinct_id = [props.precinctid, props.subprecinctid].join('.');
+    $.each(people, function(idx, person) {
+      //console.log(person, precinct_id);
+      var parts = (person["Pct Part"] + "").split(/\ +/);
+      $.each(parts, function(idx2, part) {
+        if (part.match(/^\d+\.\d+$/)) {
+          if (part == precinct_id) {
+            //console.log("match", part, precinct_id);
+            p.push(person);
+          }
+        }
+        else if (part.match(/^\.\d+$/)) {
+          var precinct = parts[0].match(/^(\d+)\./)[1];
+          if ((precinct + part) == precinct_id) {
+            //console.log("match2", part, precinct_id);
+            p.push(person);
+          }
+        }
+        else {
+          console.log("Unknown precinct format:", part);
+        }
+      });
+    });
+    console.log("matching people:", p);
 
     return p;
   };
@@ -61,7 +85,8 @@
     var tbl = $('<table>');
     var persons = persons_for_precinct(props);
     $.each(persons, function(idx, cmte) {
-      tbl.append('<tr><th>Committeeperson</th><td>'+cmte+'</td></tr>');
+      if (!cmte.Name) return;
+      tbl.append('<tr><th>Committeeperson</th><td>'+cmte.Name+'</td></tr>');
     });
     els.append(tbl);
     return els.html();
