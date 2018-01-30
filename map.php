@@ -46,14 +46,28 @@
     wards = data;
   });
 
+  var persons_for_precinct = function(props) {
+    console.log(props);
+    var p = [];
+
+    return p;
+  };
+
   var precinct_details = function(props) {
     var precinct_name = props.name;
-
-    return '<h4>' + precinct_name + '</h4>';
+    var els = $('<div>');
+    els.append($('<h4>'+precinct_name+'</h4>'));
+    els.append($('<h5>'+props.ward+'</h5>'));
+    var tbl = $('<table>');
+    var persons = persons_for_precinct(props);
+    $.each(persons, function(idx, cmte) {
+      tbl.append('<tr><th>Committeeperson</th><td>'+cmte+'</td></tr>');
+    });
+    els.append(tbl);
+    return els.html();
   };
 
   /* map config / handlers */
-  var style = { weight: 1, opacity: 1, fillOpacity: 0 };
   var polyClick = function(e) {
     var poly = e.target;
     var props = poly.feature.properties;
@@ -85,7 +99,33 @@
       mouseout: offHover
     });
   };
-  var opts = { style: style, onEachFeature: polyEach };
+
+  var getPrecinctColor = function(feature) {
+    var precinctNumber = feature.properties.precinctid;
+    var color;
+    $.each(wards, function(k, val) {
+      $.each(val.precincts, function(idx, p_id) {
+        if (p_id == precinctNumber) {
+          color = val.color;
+          feature.properties.ward = k;
+        }
+      });
+    });
+    return color;
+  };
+
+  var opts = {
+    style: function(feature) {
+      return {
+        color: '#777',
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.3,
+        fillColor: getPrecinctColor(feature)
+      };
+    },
+    onEachFeature: polyEach
+  };
 
   geojson = L.geoJson.ajax('douglas-county-precincts-2016.geojson', opts);
 
