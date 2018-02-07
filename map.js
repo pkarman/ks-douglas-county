@@ -1,10 +1,14 @@
-var map, geojson, lastPoly, info, wards, people, lastMarker;
+var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places;
+var GEO_LOOKUP = 'geo-lookup.php?address=';
 
 L.Util.ajax("people.json").then(function(data) {
   people = data;
 });
 L.Util.ajax("wards.json").then(function(data) {
   wards = data;
+});
+L.Util.ajax("polling.json").then(function(data) {
+  polling_places = data;
 });
 
 var persons_for_precinct = function(props) {
@@ -38,6 +42,18 @@ var persons_for_precinct = function(props) {
   return p;
 };
 
+var find_polling_place = function(props) {
+  var place = '';
+  $.each(polling_places, function(idx, pp) {
+    //console.log(pp, props.precinctid);
+    if (pp.Precinct == props.precinctid) {
+      place = pp.PollingPlace;
+      return false;
+    }
+  });
+  return place;
+}
+
 var precinct_details = function(props) {
   var precinct_name = props.name;
   var els = $('<div>');
@@ -49,6 +65,27 @@ var precinct_details = function(props) {
     if (!cmte.Name) return;
     tbl.append('<tr><th>Committeeperson</th><td>'+cmte.Name+'</td></tr>');
   });
+  var polling_place = find_polling_place(props);
+  tbl.append('<tr><th>Polling Location</th><td>'+polling_place+'</td></tr>');
+  // add a marker for the polling place
+  $.getJSON(GEO_LOOKUP+encodeURIComponent(polling_place), function(data) {
+      if (!data.result.addressMatches || data.result.addressMatches.length == 0) return;
+
+      var result = data.result.addressMatches[0];
+      var lat, lng, popstr, marker, icon;
+      popstr = 'Polling Location:<br/>' + result.matchedAddress;
+      lat = result.coordinates.y;
+      lng = result.coordinates.x;
+      icon = L.icon({
+        iconUrl:'https://cdn.vectorstock.com/i/thumb-large/88/29/ballot-box-line-icon-vector-17948829.jpg',
+        iconSize:[30, 30]
+      });
+      marker = L.marker([lat, lng], { icon: icon}).addTo(map).bindPopup(popstr);
+  })
+  .done(function(data) {
+    //console.log('polling geo lookup done');
+  });
+
   els.append(tbl);
   return els.html();
 };
@@ -153,7 +190,7 @@ info.update = function (props) {
 
 info.addTo(map);
 
-function address_lookup_string() {
+var address_lookup_string = function() {
   var $addr = $('#street-address').val();
   var $zip  = $('#zip-address').val();
   if ($addr.length == 0 || $zip.length == 0) {
@@ -167,7 +204,7 @@ function address_lookup_string() {
   return $addr + " KS " + $zip;
 }
 
-function renderLookup(result) {
+var renderLookup = function(result) {
   //console.log(result);
   // clean any existing marker
   if (lastMarker) {
@@ -205,8 +242,7 @@ $('#find-address').on('click', function(e) {
 
   $btn.prop('disabled', true);
 
-  var url = 'geo-lookup.php?address=';
-  $.getJSON(url+encodeURIComponent($str), function(data) {
+  $.getJSON(GEO_LOOKUP+encodeURIComponent($str), function(data) {
     //console.log(data);
     if (!data.result.addressMatches || data.result.addressMatches.length == 0) {
       $('#search').addClass('error');
