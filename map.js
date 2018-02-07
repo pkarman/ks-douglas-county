@@ -1,5 +1,6 @@
 var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places;
 var GEO_LOOKUP = 'geo-lookup.php?address=';
+var POLL_CACHE = {};
 
 L.Util.ajax("people.json").then(function(data) {
   people = data;
@@ -68,23 +69,26 @@ var precinct_details = function(props) {
   var polling_place = find_polling_place(props);
   tbl.append('<tr><th>Polling Location</th><td>'+polling_place+'</td></tr>');
   // add a marker for the polling place
-  $.getJSON(GEO_LOOKUP+encodeURIComponent(polling_place), function(data) {
-      if (!data.result.addressMatches || data.result.addressMatches.length == 0) return;
+  if (!POLL_CACHE[polling_place]) {
+    $.getJSON(GEO_LOOKUP+encodeURIComponent(polling_place), function(data) {
+        if (!data.result.addressMatches || data.result.addressMatches.length == 0) return;
 
-      var result = data.result.addressMatches[0];
-      var lat, lng, popstr, marker, icon;
-      popstr = 'Polling Location:<br/>' + result.matchedAddress;
-      lat = result.coordinates.y;
-      lng = result.coordinates.x;
-      icon = L.icon({
-        iconUrl:'https://cdn.vectorstock.com/i/thumb-large/88/29/ballot-box-line-icon-vector-17948829.jpg',
-        iconSize:[30, 30]
-      });
-      marker = L.marker([lat, lng], { icon: icon}).addTo(map).bindPopup(popstr);
-  })
-  .done(function(data) {
-    //console.log('polling geo lookup done');
-  });
+        var result = data.result.addressMatches[0];
+        var lat, lng, popstr, marker, icon;
+        popstr = 'Polling Location:<br/>' + result.matchedAddress;
+        lat = result.coordinates.y;
+        lng = result.coordinates.x;
+        icon = L.icon({
+          iconUrl:'https://cdn.vectorstock.com/i/thumb-large/88/29/ballot-box-line-icon-vector-17948829.jpg',
+          iconSize:[30, 30]
+        });
+        marker = L.marker([lat, lng], { icon: icon}).addTo(map).bindPopup(popstr);
+        POLL_CACHE[polling_place] = marker;
+    })
+    .done(function(data) {
+      //console.log('polling geo lookup done');
+    });
+  }
 
   els.append(tbl);
   return els.html();

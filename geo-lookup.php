@@ -1,4 +1,5 @@
 <?php
+  define('CACHE_TTL', 86400); // 24 hours
   $address = $_GET['address'];
   if (!$address) {
     header('X-statedems: address required', 400, false);
@@ -22,7 +23,7 @@
     $json = file_get_contents($base_url . urlencode($address));
     if ($json) {
       $cache = new FileCache();
-      $cache->save($key, $json);
+      $cache->save($key, $json, CACHE_TTL);
     }
     return $json;
   }
