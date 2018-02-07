@@ -5,9 +5,25 @@
     print 'address required';
     exit(0);
   }
-  $base_url = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?benchmark=9&format=json&address=';
-  $json = file_get_contents($base_url . $address);
+
   header('Content-Type: application/json');
-  //error_log($json);
+
+  require 'FileCache.php';
+  $cache = new FileCache();
+  $key = sha1($address);
+  $json = $cache->get($key);
+  if (!$json) {
+    $json = fetch_geocode($key, $address);
+  }
   print $json;
+
+  function fetch_geocode($key, $address) {
+    $base_url = 'https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?benchmark=9&format=json&address=';
+    $json = file_get_contents($base_url . urlencode($address));
+    if ($json) {
+      $cache = new FileCache();
+      $cache->save($key, $json);
+    }
+    return $json;
+  }
 ?>
