@@ -6,3 +6,6 @@ people:
 
 polling:
 	csv2json polling-places.csv > polling.json
+
+deploy:
+	ssh -p 10022 statedemocrats.us 'cd /data/statedemocrats.us/kansas/douglas/ && git pull'
