@@ -17,8 +17,10 @@
   <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="p-loading.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="map.css">
+  <link rel="stylesheet" type="text/css" href="p-loading.min.css">
 
 </head>
 <body>
@@ -45,6 +47,16 @@
 <div id='map'></div>
 <div id='details'></div>
 
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#map').ploading({
+      action: 'show',
+      onShowContainer: function() {
+        //console.log('shown!');
+      }
+    });
+  });
+</script>
 <script type="text/javascript" src="map.js"></script>
 
 </body>
