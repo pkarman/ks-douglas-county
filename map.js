@@ -283,6 +283,10 @@ $('#find-address').on('click', function(e) {
 
   $btn.prop('disabled', true);
 
+  var $mask = $('#mask');
+  $mask.show();
+  $mask.ploading({ action: 'show' });
+
   $.getJSON(GEO_LOOKUP+encodeURIComponent($str), function(data) {
     //console.log(data);
     if (!data.result.addressMatches || data.result.addressMatches.length == 0) {
@@ -294,6 +298,8 @@ $('#find-address').on('click', function(e) {
   .done(function() {
     //console.log('done!');
     $btn.prop('disabled', false);
+    $mask.hide();
+    $mask.ploading({ action: 'hide' });
   })
   .fail(function(r) {
     console.log('fail: ', r);
