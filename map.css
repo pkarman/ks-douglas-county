@@ -71,6 +71,24 @@ input.search {
   padding-right: 1em;
 }
 
+dl {
+  padding: 0.5em;
+}
+dt {
+  float: left;
+  clear: left;
+  width: 100px;
+  text-align: right;
+  font-weight: bold;
+}
+dt::after {
+  content: ":";
+}
+dd {
+  margin: 0 0 0 110px;
+  padding: 0 0 0.5em 0;
+}
+
 @media screen and (max-width: 600px) {
   #details {
     min-width: 260px;

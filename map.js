@@ -1,6 +1,7 @@
-var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places;
+var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places, voter_stats;
 var GEO_LOOKUP = 'geo-lookup.php?address=';
 var POLL_CACHE = {};
+var election_stat_ids = ['GN2008', 'GN2010', 'GN2012', 'GN2014', 'GN2016'];
 
 L.Util.ajax("people.json").then(function(data) {
   people = data;
@@ -10,6 +11,9 @@ L.Util.ajax("wards.json").then(function(data) {
 });
 L.Util.ajax("polling.json").then(function(data) {
   polling_places = data;
+});
+L.Util.ajax("douglas-county-voters-stats.json").then(function(data) {
+  voter_stats = data;
 });
 
 var persons_for_precinct = function(props) {
@@ -38,7 +42,7 @@ var persons_for_precinct = function(props) {
       }
     });
   });
-  console.log("matching people:", p);
+  //console.log("matching people:", p);
 
   return p;
 };
@@ -91,6 +95,34 @@ var precinct_details = function(props) {
   }
 
   els.append(tbl);
+
+  // voter stats
+  var ct_id = props.precinctid + '.' + props.subprecinctid;
+  var vtd_code = voter_stats['names'][precinct_name] || voter_stats['names'][ct_id];
+
+  if (!vtd_code) return els.html();
+
+  els.append('<h5>VTD: '+vtd_code+'</h5>');
+
+  var stats = voter_stats[vtd_code];
+  //console.log(stats);
+  $.each(election_stat_ids, function(idx, id) {
+    var stat = stats[id];
+    var by_party = $('<table>');
+    by_party.append('<caption>'+id+'</caption>');
+    by_party.append('<tr><th></th><th>Registered</th><th>Turnout</th><th>%</th></tr>');
+    // sort party names for consistency
+    var parties = [];
+    $.each(stat, function(party) {
+      parties.push(party);
+    });
+    $.each(parties.sort(), function(idx2, party) {
+      var numbers = stat[party];
+      by_party.append('<tr><th>'+party+'</th><td>'+numbers['r']+'</td><td>'+numbers['c']+'</td><td>'+numbers['p'].toFixed(2)+'</td></tr>');
+    });
+    els.append(by_party);
+  });
+
   return els.html();
 };
 
@@ -98,6 +130,7 @@ var precinct_details = function(props) {
 var polyClick = function(e) {
   var poly = e.target;
   var props = poly.feature.properties;
+  console.log(props);
   $('#details').html(precinct_details(props));
   poly.setStyle({ weight: 3, color: '#666', fillOpacity: 0.1 });
   if (lastPoly && lastPoly != poly) {
