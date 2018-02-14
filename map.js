@@ -156,7 +156,8 @@ var opts = {
 
 geojson = L.geoJson.ajax('douglas-county-precincts-2016.geojson', opts);
 geojson.on('data:loaded', function() {
-  $('#map').ploading({action: 'hide'});
+  $('#mask').ploading({action: 'hide'});
+  $('#mask').hide();
 });
 
 var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +

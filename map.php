@@ -31,6 +31,8 @@
  </ul>
 </nav>
 
+<div id="mask"></div>
+
 <div id='about'>
 <h1>Precinct Map</h1>
 </div>
@@ -49,12 +51,9 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#map').ploading({
-      action: 'show',
-      onShowContainer: function() {
-        //console.log('shown!');
-      }
-    });
+    var $mask = $('#mask');
+    $mask.show();
+    $mask.ploading({ action: 'show' });
   });
 </script>
 <script type="text/javascript" src="map.js"></script>
