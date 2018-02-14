@@ -303,6 +303,8 @@ $('#find-address').on('click', function(e) {
   })
   .fail(function(r) {
     console.log('fail: ', r);
+    $mask.hide();
+    $mask.ploading({ action: 'hide' });
   });
 });
 
