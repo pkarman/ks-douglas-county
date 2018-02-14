@@ -17,10 +17,10 @@
   <script src="https://unpkg.com/@mapbox/leaflet-pip@latest/leaflet-pip.js"></script>
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="p-loading.min.js"></script>
+  <script src="https://statedemocrats.us/js/p-loading.min.js"></script>
 
   <link rel="stylesheet" type="text/css" href="map.css">
-  <link rel="stylesheet" type="text/css" href="p-loading.min.css">
+  <link rel="stylesheet" type="text/css" href="https://statedemocrats.us/css/p-loading.min.css">
 
 </head>
 <body>
