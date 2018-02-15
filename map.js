@@ -291,18 +291,23 @@ $('#find-address').on('click', function(e) {
     //console.log(data);
     if (!data.result.addressMatches || data.result.addressMatches.length == 0) {
       $('#search').addClass('error');
+      $('#error-msg').text('Error looking up address');
+      console.log(data);
       return;
     }
     renderLookup(data.result.addressMatches[0]);
   })
   .done(function() {
     //console.log('done!');
-    $btn.prop('disabled', false);
-    $mask.hide();
-    $mask.ploading({ action: 'hide' });
   })
   .fail(function(r) {
     console.log('fail: ', r);
+    $('#search').addClass('error');
+    $('#error-msg').text('Error looking up address');
+  })
+  .always(function(r) {
+    //console.log('always:', r);
+    $btn.prop('disabled', false);
     $mask.hide();
     $mask.ploading({ action: 'hide' });
   });

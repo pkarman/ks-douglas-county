@@ -53,6 +53,11 @@ input.search {
   border: 1px solid red;
 }
 
+#error-msg {
+  color: red;
+  padding: 4px;
+}
+
 #details {
   float: left;
   border: 1px solid #ddd;
