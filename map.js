@@ -205,12 +205,11 @@ var opts = {
   style: function(feature) {
     var precinctColor = getPrecinctColor(feature);
     var dashArray = getDashArray(feature);
-    var lineColor = '#666';
+    var lineColor = '#777';
     var fillPattern = null;
 
     // no precinct persons
     if (dashArray !== null) {
-      //lineColor = '#33c9ff';
       var stripes = new L.StripePattern({color: precinctColor, angle: 20, weight: 6});
       stripes.addTo(map);
       fillPattern = stripes;
@@ -220,7 +219,7 @@ var opts = {
       color: lineColor,
       weight: 1,
       opacity: 1,
-      fillOpacity: 0.3,
+      fillOpacity: 0.2,
       fillColor: precinctColor,
       fillPattern: fillPattern,
       dashArray: dashArray
