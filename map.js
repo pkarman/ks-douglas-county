@@ -18,33 +18,50 @@ L.Util.ajax("douglas-county-voters-stats.json").then(function(data) {
 
 var persons_for_precinct = function(props) {
   //console.log(props);
+  if (props.people) return props.people;
+
   var p = [];
   var precinct_id = [props.precinctid, props.subprecinctid].join('.');
+
+  if (!PRECINCT2PERSON) {
+    buildPrecinct2Person();
+  }
+
+  if (PRECINCT2PERSON[precinct_id]) {
+    p = PRECINCT2PERSON[precinct_id];
+  }
+  props['people'] = p;
+  return p;
+};
+
+var PRECINCT2PERSON;
+function buildPrecinct2Person() {
+  PRECINCT2PERSON = {};
   $.each(people, function(idx, person) {
     //console.log(person, precinct_id);
+    if (!person.Name) return true;
     var parts = (person["Pct Part"] + "").split(/\ +/);
+    //console.log(person, parts);
     $.each(parts, function(idx2, part) {
       if (part.match(/^\d+\.\d+$/)) {
-        if (part == precinct_id) {
-          //console.log("match", part, precinct_id);
-          p.push(person);
+        if (!PRECINCT2PERSON[part]) {
+          PRECINCT2PERSON[part] = [];
         }
+        PRECINCT2PERSON[part].push(person);
       }
       else if (part.match(/^\.\d+$/)) {
         var precinct = parts[0].match(/^(\d+)\./)[1];
-        if ((precinct + part) == precinct_id) {
-          //console.log("match2", part, precinct_id);
-          p.push(person);
+        var precinct_id = precinct + part;
+        if (!PRECINCT2PERSON[precinct_id]) {
+          PRECINCT2PERSON[precinct_id] = [];
         }
+        PRECINCT2PERSON[precinct_id].push(person);
       }
       else {
         console.log("Unknown precinct format:", part);
       }
     });
   });
-  //console.log("matching people:", p);
-
-  return p;
 };
 
 var find_polling_place = function(props) {
@@ -174,14 +191,39 @@ var getPrecinctColor = function(feature) {
   return color;
 };
 
+var getDashArray = function(feature) {
+  var precinctNumber = feature.properties.precinctid;
+  var dashArray = null;
+  var people = persons_for_precinct(feature.properties);
+  if (people.length == 0) {
+    dashArray = '30,10';
+  }
+  return dashArray;
+};
+
 var opts = {
   style: function(feature) {
+    var precinctColor = getPrecinctColor(feature);
+    var dashArray = getDashArray(feature);
+    var lineColor = '#666';
+    var fillPattern = null;
+
+    // no precinct persons
+    if (dashArray !== null) {
+      //lineColor = '#33c9ff';
+      var stripes = new L.StripePattern({color: precinctColor, angle: 20, weight: 6});
+      stripes.addTo(map);
+      fillPattern = stripes;
+    }
+
     return {
-      color: '#777',
+      color: lineColor,
       weight: 1,
       opacity: 1,
       fillOpacity: 0.3,
-      fillColor: getPrecinctColor(feature)
+      fillColor: precinctColor,
+      fillPattern: fillPattern,
+      dashArray: dashArray
     };
   },
   onEachFeature: polyEach
@@ -324,3 +366,14 @@ $('#zip-address').keyup(function(e) {
     $('#find-address').click();
   }
 });
+
+// clear all markers
+function clearAllMapMarkers() {
+  if (lastMarker) {
+    map.removeLayer(lastMarker);
+  }
+  $.each(POLL_CACHE, function(polling_place, marker) {
+    //console.log(polling_place, marker);
+    map.removeLayer(marker);
+  });
+}

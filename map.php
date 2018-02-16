@@ -18,6 +18,7 @@
 
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script src="https://statedemocrats.us/js/p-loading.min.js"></script>
+  <script src="https://statedemocrats.us/js/leaflet.pattern.js"></script>
 
   <link rel="stylesheet" type="text/css" href="map.css">
   <link rel="stylesheet" type="text/css" href="https://statedemocrats.us/css/p-loading.min.css">
@@ -35,6 +36,7 @@
 
 <div id='about'>
 <h1>Precinct Map</h1>
+<p>Problem? Send email to <a href="mailto:info@statedemocrats.us">info@statedemocrats.us</a>.</p>
 </div>
 
 <div id='search'>
@@ -46,6 +48,9 @@
  <div id="error-msg"></div>
 </div>
 
+<div id='controls'>
+ <button onclick="clearAllMapMarkers()">Clear map markers</button>
+</div>
 <div id='map'></div>
 <div id='details'></div>
 
