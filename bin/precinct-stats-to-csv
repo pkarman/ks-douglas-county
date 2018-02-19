@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'csv'
+
+stats = JSON.parse(File.read('douglas-county-voters-stats.json'))
+@precinct_names = stats['names']
+
+def find_name(vtd)
+  found = ''
+  @precinct_names.each do |name, vtdc|
+    next unless vtd == vtdc
+    found = name unless name.length < found.length
+  end
+  found
+end
+
+CSV.open('douglas-county-voters-stats.csv', 'wb') do |csv|
+  csv << ['precinct', 'election', 'party', 'registered', 'turnout', 'percentage']
+  stats.keys.each do |vtd|
+    next if vtd == 'names'
+
+    precinct_name = find_name(vtd)
+   
+    stats[vtd].each do |election, parties|
+      next unless election.match(/^GN/)
+      parties.each do |party_name, s|
+        csv << [precinct_name, election, party_name, s['r'], s['c'], s['p'].round(2)]
+      end
+    end
+  end
+end
