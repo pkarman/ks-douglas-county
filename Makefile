@@ -1,6 +1,9 @@
 json:
 	bin/build-json
 
+csv:
+	bin/precinct-stats-to-csv
+
 people:
 	csv2json doco-democratic-committeepeople.csv > people.json
 

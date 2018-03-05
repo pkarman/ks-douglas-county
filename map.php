@@ -28,7 +28,9 @@
 
 <nav class="menu">
  <ul>
-  <li><a href="http://douglascountydems.org/">Douglas County Democrats</a></li>
+  <li><a href="https://statedemocrats.us/">State Democrats</a></li>
+  <li><a href="https://statedemocrats.us/kansas/">Kansas</a></li>
+  <li class="active"><a href="http://douglascountydems.org/">Douglas County</a></li>
  </ul>
 </nav>
 
