@@ -51,7 +51,8 @@
 </div>
 
 <div id='controls'>
- <button onclick="clearAllMapMarkers()">Clear map markers</button>
+ <span class='control'>Select a Precinct: <select id="precinct-list"></select></span>
+ <span class='control'><button onclick="clearAllMapMarkers()">Clear map markers</button></span>
 </div>
 <div id='map'></div>
 <div id='details'></div>

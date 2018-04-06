@@ -1,13 +1,34 @@
-var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places, voter_stats;
+var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places, precincts, voter_stats;
 var GEO_LOOKUP = 'geo-lookup.php?address=';
 var POLL_CACHE = {};
 var election_stat_ids = ['GN2008', 'GN2010', 'GN2012', 'GN2014', 'GN2016'];
+
+var makePrecinctSelector = function() {
+  var $dropdown = $('#precinct-list');
+  //console.log('populating', $dropdown, 'with', precincts);
+  $dropdown.append($('<option />').val('').text(''));
+  $.each(precincts, function(idx, p_id) {
+    $dropdown.append($('<option />').val(p_id).text(p_id));
+  });
+  $dropdown.change(function() {
+    var precinctPicked = $dropdown.find(':selected').text();
+    if (!precinctPicked) return;
+    showPrecinct(precinctPicked);
+  });
+};
 
 L.Util.ajax("people.json").then(function(data) {
   people = data;
 });
 L.Util.ajax("wards.json").then(function(data) {
   wards = data;
+  precincts = [];
+  $.each(wards, function(k, val) {
+    $.each(val.precincts, function(idx, p_id) {
+      precincts.push(p_id);
+    });
+  });
+  precincts.sort(function(a,b) { return a - b });
 });
 L.Util.ajax("polling.json").then(function(data) {
   polling_places = data;
@@ -147,7 +168,7 @@ var precinct_details = function(props) {
 var polyClick = function(e) {
   var poly = e.target;
   var props = poly.feature.properties;
-  console.log(props);
+  //console.log(props);
   $('#details').html(precinct_details(props));
   poly.setStyle({ weight: 3, color: '#666', fillOpacity: 0.1 });
   if (lastPoly && lastPoly != poly) {
@@ -232,6 +253,7 @@ geojson = L.geoJson.ajax('douglas-county-precincts-2016.geojson', opts);
 geojson.on('data:loaded', function() {
   $('#mask').ploading({action: 'hide'});
   $('#mask').hide();
+  makePrecinctSelector();
 });
 
 var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
@@ -308,7 +330,7 @@ var renderLookup = function(result) {
   // activate whichever precinct this marker lies within
   var pip_precincts = leafletPip.pointInLayer([lng, lat], geojson);
   $.each(pip_precincts, function(idx, precinct) {
-    console.log(precinct);
+    //console.log(precinct);
     precinct.fireEvent('click');
   });
   lastMarker = marker;
@@ -333,7 +355,7 @@ $('#find-address').on('click', function(e) {
     if (!data.result.addressMatches || data.result.addressMatches.length == 0) {
       $('#search').addClass('error');
       $('#error-msg').text('Error looking up address');
-      console.log(data);
+      //console.log(data);
       return;
     }
     renderLookup(data.result.addressMatches[0]);
@@ -374,5 +396,19 @@ function clearAllMapMarkers() {
   $.each(POLL_CACHE, function(polling_place, marker) {
     //console.log(polling_place, marker);
     map.removeLayer(marker);
+  });
+}
+
+function showPrecinct(precinctId) {
+  var found = false;
+  geojson.eachLayer(function(layer) {
+    if (found) return;
+    var props = layer.feature.properties;
+    if (props.precinctid == precinctId) {
+      //console.log(layer);
+      layer.fireEvent('click');
+      map.fitBounds(layer.getLatLngs());
+      found = true;
+    }
   });
 }
