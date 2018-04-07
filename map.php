@@ -48,12 +48,13 @@
  <input id='zip-address' class='search' type='text' size='10' >
  <button id='find-address'>Lookup Address</button>
  <div id="error-msg"></div>
+ <div class='control'>or Select a Precinct: <select id="precinct-list"></select></div>
 </div>
 
 <div id='controls'>
- <span class='control'>Select a Precinct: <select id="precinct-list"></select></span>
- <span class='control'><button onclick="clearAllMapMarkers()">Clear map markers</button></span>
+ <div class='control'><button onclick="clearAllMapMarkers()">Clear map markers</button></div>
 </div>
+
 <div id='map'></div>
 <div id='details'></div>
 
