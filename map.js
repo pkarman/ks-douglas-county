@@ -261,6 +261,15 @@ geojson.on('data:loaded', function() {
   }
 });
 
+var county_commission_layer = L.geoJson.ajax('CountyCommissionDistrict.geojson', {
+  style: {
+      color: 'red',
+      weight: 2,
+      opacity: 1,
+      fillOpacity: 0,
+  }
+});
+
 // https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
 function getJsonFromUrl(hashBased) {
   var query;
@@ -311,7 +320,7 @@ function onMapClick(e) {
 map = L.map('map', {
   center: [38.91, -95.25],
   zoom: 10,
-  layers: [streets, geojson]
+  layers: [streets, county_commission_layer, geojson]
 });
 
 //map.on('click', onMapClick);
