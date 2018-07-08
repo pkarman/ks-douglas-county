@@ -42,7 +42,7 @@ var persons_for_precinct = function(props) {
   if (props.people) return props.people;
 
   var p = [];
-  var precinct_id = [props.precinctid, props.subprecinctid].join('.');
+  var precinct_id = [props.PRECINCTID].join('.');
 
   if (!PRECINCT2PERSON) {
     buildPrecinct2Person();
@@ -86,11 +86,11 @@ function buildPrecinct2Person() {
 };
 
 var find_polling_place = function(props) {
-  return polling_places[props.precinctid];
+  return polling_places[props.PRECINCTID];
 }
 
 var precinct_details = function(props) {
-  var precinct_name = props.name;
+  var precinct_name = props.NAME;
   var els = $('<div>');
   els.append($('<h4>'+precinct_name+'</h4>'));
   els.append($('<h5>'+props.ward+'</h5>'));
@@ -127,7 +127,7 @@ var precinct_details = function(props) {
   els.append(tbl);
 
   // voter stats
-  var ct_id = props.precinctid + '.' + props.subprecinctid;
+  var ct_id = props.PRECINCTID;
   var vtd_code = voter_stats['names'][precinct_name] || voter_stats['names'][ct_id];
 
   if (!vtd_code) return els.html();
@@ -191,7 +191,7 @@ var polyEach = function(p, layer) {
 };
 
 var getPrecinctColor = function(feature) {
-  var precinctNumber = feature.properties.precinctid;
+  var precinctNumber = feature.properties.PRECINCTID;
   var color;
   $.each(wards, function(k, val) {
     $.each(val.precincts, function(idx, p_id) {
@@ -205,7 +205,7 @@ var getPrecinctColor = function(feature) {
 };
 
 var getDashArray = function(feature) {
-  var precinctNumber = feature.properties.precinctid;
+  var precinctNumber = feature.properties.PRECINCTID;
   var dashArray = null;
   var people = persons_for_precinct(feature.properties);
   if (people.length == 0) {
@@ -241,7 +241,7 @@ var opts = {
   onEachFeature: polyEach
 };
 
-geojson = L.geoJson.ajax('douglas-county-precincts-2016.geojson', opts);
+geojson = L.geoJson.ajax('douglas-county-precincts-2018.geojson', opts);
 geojson.on('data:loaded', function() {
   $('#mask').ploading({action: 'hide'});
   $('#mask').hide();
@@ -326,7 +326,7 @@ info.onAdd = function (map) {
 };
 
 info.update = function (props) {
-  this._div.innerHTML = '<h4>Precinct</h4>' +  (props ?  (props.NAME || props.PRECINCT || props.name) : 'Click on a precinct');
+  this._div.innerHTML = '<h4>Precinct</h4>' +  (props ?  (props.NAME || props.PRECINCTID || props.name) : 'Click on a precinct');
 };
 
 info.addTo(map);
@@ -441,7 +441,7 @@ function showPrecinct(precinctId) {
   geojson.eachLayer(function(layer) {
     if (found) return;
     var props = layer.feature.properties;
-    if (props.precinctid == precinctId) {
+    if (props.PRECINCTID == precinctId) {
       //console.log(layer);
       layer.fireEvent('click');
       map.fitBounds(layer.getLatLngs());
