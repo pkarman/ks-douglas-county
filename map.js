@@ -468,8 +468,9 @@ function showPrecinct(precinctId) {
     var props = layer.feature.properties;
     if (props.PRECINCTID == precinctId) {
       //console.log(layer);
-      layer.fireEvent('click');
-      map.fitBounds(layer.getLatLngs());
+      var latlngs = layer.getLatLngs();
+      layer.fireEvent('click', { latlng: layer.getCenter() });
+      map.fitBounds(latlngs);
       found = true;
     }
   });
