@@ -18,3 +18,6 @@ deploy-csv:
 
 deploy:
 	ssh statedemocrats.us 'cd /data/statedemocrats.us/kansas/douglas/ && git pull'
+
+districts:
+	ruby bin/build-precinct-districts > precinct-with-districts.csv

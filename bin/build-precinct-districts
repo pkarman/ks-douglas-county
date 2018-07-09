@@ -1,0 +1,50 @@
+#!/usr/bin/env ruby
+
+require 'pp'
+require 'rgeo'
+require 'rgeo/geo_json'
+
+ks_house = RGeo::GeoJSON.decode(File.read('ks-house-2016.geojson'), json_parser: :json)
+ks_senate = RGeo::GeoJSON.decode(File.read('ks-senate-2016.geojson'), json_parser: :json)
+precincts = RGeo::GeoJSON.decode(File.read('douglas-county-precincts-2018.geojson'), json_parser: :json)
+people = JSON.parse(File.read('people.json'))
+
+orphans = {}
+people.each do |person|
+  if !person['Name']
+    #puts person['precinctnumber']
+    orphans[person['precinctnumber']] ||= 0
+    orphans[person['precinctnumber']] += 1
+  end
+end
+
+puts [:name, :id, :house, :senate, :orphan].join(',')
+
+precincts.entries.each do |precinct|
+  props = precinct.properties
+  name = props['NAME']
+  ppid = props['PPID']
+  row = [name, ppid]
+
+  ks_house.entries.each do |house|
+    if house.geometry.contains?(precinct.geometry)
+      row << house.properties['NAME']
+    end
+  end
+
+  row << '' unless row.length == 3
+
+  ks_senate.entries.each do |senate|
+    if senate.geometry.contains?(precinct.geometry)
+      row << senate.properties['NAME']
+    end
+  end
+
+  row << '' unless row.length == 4
+
+  if orphans[ppid] && orphans[ppid] == 2
+    row << 'x'
+  end
+
+  puts row.join(',')
+end
