@@ -44,6 +44,8 @@ precincts.entries.each do |precinct|
 
   if orphans[ppid] && orphans[ppid] == 2
     row << 'x'
+  else
+    row << ''
   end
 
   puts row.join(',')
