@@ -1,4 +1,5 @@
 var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places, precincts, voter_stats;
+var ks_house, ks_senate;
 var GEO_LOOKUP = 'geo-lookup.php?address=';
 var POLL_CACHE = {};
 var election_stat_ids = ['GN2008', 'GN2010', 'GN2012', 'GN2014', 'GN2016'];
@@ -42,7 +43,7 @@ var persons_for_precinct = function(props) {
   if (props.people) return props.people;
 
   var p = [];
-  var precinct_id = [props.PRECINCTID].join('.');
+  var precinct_id = [props.PRECINCTID, props.SUBPRECINC].join('.');
 
   if (!PRECINCT2PERSON) {
     buildPrecinct2Person();
@@ -59,7 +60,6 @@ var PRECINCT2PERSON;
 function buildPrecinct2Person() {
   PRECINCT2PERSON = {};
   $.each(people, function(idx, person) {
-    //console.log(person, precinct_id);
     if (!person.Name) return true;
     var parts = (person["Pct Part"] + "").split(/\ +/);
     //console.log(person, parts);
@@ -89,11 +89,14 @@ var find_polling_place = function(props) {
   return polling_places[props.PRECINCTID];
 }
 
-var precinct_details = function(props) {
+var precinct_details = function(props, ks_house_props, ks_senate_props) {
+  //console.log(props, ks_house_props, ks_senate_props);
   var precinct_name = props.NAME;
   var els = $('<div>');
   els.append($('<h4>'+precinct_name+'</h4>'));
   els.append($('<h5>'+props.ward+'</h5>'));
+  els.append($('<h5>KS House District '+ks_house_props.NAME+'</h5>'));
+  els.append($('<h5>KS Senate District '+ks_senate_props.NAME+'</h5>'));
   var tbl = $('<table>');
   var persons = persons_for_precinct(props);
   $.each(persons, function(idx, cmte) {
@@ -127,7 +130,7 @@ var precinct_details = function(props) {
   els.append(tbl);
 
   // voter stats
-  var ct_id = props.PRECINCTID;
+  var ct_id = props.PRECINCTID + '.' + props.SUBPRECINC;
   var vtd_code = voter_stats['names'][precinct_name] || voter_stats['names'][ct_id];
 
   if (!vtd_code) return els.html();
@@ -158,10 +161,15 @@ var precinct_details = function(props) {
 
 /* map config / handlers */
 var polyClick = function(e) {
+  var lng = e.latlng.lng;
+  var lat = e.latlng.lat;
+  var polys_clicked = [];
+  var ks_house_district = leafletPip.pointInLayer([lng,lat], ks_house)[0];
+  var ks_senate_district = leafletPip.pointInLayer([lng,lat], ks_senate)[0];
   var poly = e.target;
   var props = poly.feature.properties;
   //console.log(props);
-  $('#details').html(precinct_details(props));
+  $('#details').html(precinct_details(props, ks_house_district.feature.properties, ks_senate_district.feature.properties));
   poly.setStyle({ weight: 3, color: '#666', fillOpacity: 0.1 });
   if (lastPoly && lastPoly != poly) {
     geojson.resetStyle(lastPoly);
@@ -262,6 +270,23 @@ var county_commission_layer = L.geoJson.ajax('CountyCommissionDistrict.geojson',
   }
 });
 
+ks_house = L.geoJson.ajax('ks-house-2016.geojson', {
+  style: {
+    color: 'blue',
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0,
+  }
+});
+ks_senate = L.geoJson.ajax('ks-senate-2016.geojson', {
+  style: {
+    color: 'green',
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0,
+  }
+});
+
 // https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
 function getJsonFromUrl(hashBased) {
   var query;
@@ -312,7 +337,7 @@ function onMapClick(e) {
 map = L.map('map', {
   center: [38.91, -95.25],
   zoom: 10,
-  layers: [streets, county_commission_layer, geojson]
+  layers: [streets, county_commission_layer, ks_house, ks_senate, geojson]
 });
 
 //map.on('click', onMapClick);
