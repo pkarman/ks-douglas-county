@@ -20,6 +20,10 @@ end
 
 puts [:name, :id, :house, :senate, :orphan].join(',')
 
+def geos_relate?(district, precinct)
+  district.contains?(precinct.centroid)
+end
+
 precincts.entries.each do |precinct|
   props = precinct.properties
   name = props['NAME']
@@ -27,20 +31,20 @@ precincts.entries.each do |precinct|
   row = [name, ppid]
 
   ks_house.entries.each do |house|
-    if house.geometry.contains?(precinct.geometry)
+    if geos_relate?(house.geometry, precinct.geometry)
       row << house.properties['NAME']
     end
   end
 
-  row << '' unless row.length == 3
+  row << '' unless row.length > 2
 
   ks_senate.entries.each do |senate|
-    if senate.geometry.contains?(precinct.geometry)
+    if geos_relate?(senate.geometry, precinct.geometry)
       row << senate.properties['NAME']
     end
   end
 
-  row << '' unless row.length == 4
+  row << '' unless row.length > 3
 
   if orphans[ppid] && orphans[ppid] == 2
     row << 'x'
