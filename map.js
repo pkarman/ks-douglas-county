@@ -4,6 +4,8 @@ var GEO_LOOKUP = 'geo-lookup.php?address=';
 var POLL_CACHE = {};
 var election_stat_ids = ['GN2008', 'GN2010', 'GN2012', 'GN2014', 'GN2016'];
 
+precincts = []; // will populate async after geojson loads
+
 var makePrecinctSelector = function() {
   var $dropdown = $('#precinct-list');
   //console.log('populating', $dropdown, 'with', precincts);
@@ -23,13 +25,6 @@ L.Util.ajax("people.json").then(function(data) {
 });
 L.Util.ajax("wards.json").then(function(data) {
   wards = data;
-  precincts = [];
-  $.each(wards, function(k, val) {
-    $.each(val.precincts, function(idx, p_id) {
-      precincts.push(p_id);
-    });
-  });
-  precincts.sort(function(a,b) { return a - b });
 });
 L.Util.ajax("polling.json").then(function(data) {
   polling_places = data;
@@ -104,27 +99,29 @@ var precinct_details = function(props, ks_house_props, ks_senate_props) {
     tbl.append('<tr><th>Committeeperson</th><td>'+cmte.Name+'</td></tr>');
   });
   var polling_place = find_polling_place(props);
-  tbl.append('<tr><th>Polling Location</th><td><a href="'+polling_place.url+'">'+polling_place.name+'</a><br/>'+polling_place.address+'</td></tr>');
-  // add a marker for the polling place
-  if (!POLL_CACHE[polling_place.address]) {
-    $.getJSON(GEO_LOOKUP+encodeURIComponent(polling_place.address), function(data) {
-      if (!data.result.addressMatches || data.result.addressMatches.length == 0) return;
-
-      var result = data.result.addressMatches[0];
-      var lat, lng, popstr, marker, icon;
-      popstr = 'Polling Location:<br/>' + result.matchedAddress;
-      lat = result.coordinates.y;
-      lng = result.coordinates.x;
-      icon = L.icon({
-        iconUrl:'https://cdn.vectorstock.com/i/thumb-large/88/29/ballot-box-line-icon-vector-17948829.jpg',
-        iconSize:[30, 30]
+  if (polling_place) {
+    tbl.append('<tr><th>Polling Location</th><td><a href="'+polling_place.url+'">'+polling_place.name+'</a><br/>'+polling_place.address+'</td></tr>');
+    // add a marker for the polling place
+    if (!POLL_CACHE[polling_place.address]) {
+      $.getJSON(GEO_LOOKUP+encodeURIComponent(polling_place.address), function(data) {
+        if (!data.result.addressMatches || data.result.addressMatches.length == 0) return;
+  
+        var result = data.result.addressMatches[0];
+        var lat, lng, popstr, marker, icon;
+        popstr = 'Polling Location:<br/>' + result.matchedAddress;
+        lat = result.coordinates.y;
+        lng = result.coordinates.x;
+        icon = L.icon({
+          iconUrl:'https://cdn.vectorstock.com/i/thumb-large/88/29/ballot-box-line-icon-vector-17948829.jpg',
+          iconSize:[30, 30]
+        });
+        marker = L.marker([lat, lng], { icon: icon}).addTo(map).bindPopup(popstr);
+        POLL_CACHE[polling_place.address] = marker;
+      })
+      .done(function(data) {
+        //console.log('polling geo lookup done');
       });
-      marker = L.marker([lat, lng], { icon: icon}).addTo(map).bindPopup(popstr);
-      POLL_CACHE[polling_place.address] = marker;
-    })
-    .done(function(data) {
-      //console.log('polling geo lookup done');
-    });
+    }
   }
 
   els.append(tbl);
@@ -190,7 +187,8 @@ var offHover = function(e) {
   }
   info.update();
 };
-var polyEach = function(p, layer) {
+var eachPrecinctFeature = function(p, layer) {
+  precincts.push(layer.feature.properties.PPID);
   layer.on({
     click: polyClick,
     mouseover: onHover,
@@ -246,13 +244,14 @@ var opts = {
       dashArray: dashArray
     };
   },
-  onEachFeature: polyEach
+  onEachFeature: eachPrecinctFeature
 };
 
 geojson = L.geoJson.ajax('douglas-county-precincts-2018.geojson', opts);
 geojson.on('data:loaded', function() {
   $('#mask').ploading({action: 'hide'});
   $('#mask').hide();
+  precincts.sort(function(a,b) { return a - b });
   makePrecinctSelector();
   // populate form from url params if present
   var urlParams = getJsonFromUrl();
@@ -462,11 +461,14 @@ function clearAllMapMarkers() {
 }
 
 function showPrecinct(precinctId) {
+  if (precinctId.match(/^\d+$/)) {
+    precinctId = precinctId + '.1';
+  }
   var found = false;
   geojson.eachLayer(function(layer) {
     if (found) return;
     var props = layer.feature.properties;
-    if (props.PRECINCTID == precinctId) {
+    if (props.PPID == precinctId) {
       //console.log(layer);
       var latlngs = layer.getLatLngs();
       layer.fireEvent('click', { latlng: layer.getCenter() });
