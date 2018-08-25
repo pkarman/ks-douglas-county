@@ -158,6 +158,10 @@ var precinct_details = function(props, ks_house_props, ks_senate_props) {
 
 /* map config / handlers */
 var polyClick = function(e) {
+  if (!e) {
+    console.log("cannot handle polyClick with no event");
+    return;
+  }
   var lng = e.latlng.lng;
   var lat = e.latlng.lat;
   var polys_clicked = [];
@@ -376,10 +380,11 @@ var renderLookup = function(result) {
     map.removeLayer(lastMarker);
   }
 
-  var lat, lng, popstr, marker;
+  var lat, lng, popstr, marker, latlngPoint;
   popstr = result.matchedAddress;
   lat = result.coordinates.y;
   lng = result.coordinates.x;
+  latlngPoint = new L.LatLng(lat, lng);
   map.setView([lat, lng], 16);
   marker = L.circle([lat, lng], {
     color: 'blue',
@@ -392,7 +397,11 @@ var renderLookup = function(result) {
   var pip_precincts = leafletPip.pointInLayer([lng, lat], geojson);
   $.each(pip_precincts, function(idx, precinct) {
     //console.log(precinct);
-    precinct.fireEvent('click');
+    precinct.fireEvent('click', {
+      latlng: latlngPoint, 
+      layerPoint: map.latLngToLayerPoint(latlngPoint),
+      containerPoint: map.latLngToContainerPoint(latlngPoint)
+    });
   });
   lastMarker = marker;
 }
