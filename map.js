@@ -2,7 +2,7 @@ var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places, pre
 var ks_house, ks_senate;
 var GEO_LOOKUP = 'geo-lookup.php?address=';
 var POLL_CACHE = {};
-var election_stat_ids = ['GN2008', 'GN2010', 'GN2012', 'GN2014', 'GN2016'];
+var election_stat_ids = ['GN2008', 'GN2010', 'GN2012', 'GN2014', 'GN2016', 'PR2018'];
 
 precincts = []; // will populate async after geojson loads
 
