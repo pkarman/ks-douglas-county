@@ -1,10 +1,10 @@
 Ward,Pct,Pct Part,Position ,Name,Street,City,State,Zip,Phone,Email,notes,precinctnumber
 8,1,1.1,Democratic Committeeman,Paul Jefferson,240 Alabama St Apt A,Lawrence,KS,66044,785-542-9514,pauljeff@gmail.com,,1.1
-8,1,1.1,Democratic Committeewoman,Jennifer S. Newlin,530 Louisiana St,Lawrence,KS,66044,785-550-7227,newlinjennifer@yahoo.com,,1.1
-8,2,2.1,Democratic Committeeman,Stephen Ruttinger,720 Indiana St,Lawrence,KS,66044,816-289-3802,smr720i@gmail.com,,2.1
+8,1,1.1,Democratic Committeewoman,Anne Haehl,1300 W 2nd St,Lawrence,KS,66044,785-842-7708,,,1.1
+8,2,2.1,Democratic Committeeman,Steve Lopes,704 Ohio St.,Lawrence,KS,66044,,jovotes2016@gmail.com,,2.1
 8,2,2.1,Democratic Committeewoman,Lois Orth-Lopes,704 Ohio St.,Lawrence,KS,66044,785-842-7137,LOISORTHL@aol.com,,2.1
 8,3,3.1,Democratic Committeeman,Peter Karman,753 Sunset Dr,Lawrence ,KS,66044,785.337.0405,"peter@peknet.com,",,3.1
-8,3,3.1,Democratic Committeewoman,,,,,,,,,3.1
+8,3,3.1,Democratic Committeewoman,Ashley Bloom,835 Alabama,Lawrence,KS,66044,785-550-5870,bloom.warring@gmail.com,,3.1
 8,4,4.1,Democratic Committeeman,,,,,,,,,4.1
 8,4,4.1,Democratic Committeewoman,Galenea Miller,316 Northwood Ln,Lawrence,KS,66044,316-304-9158,leneam82@gmail.com,,4.1
 11,5,5.1,Democratic Committeeman,,,,,,,,,5.1
@@ -25,31 +25,31 @@ Ward,Pct,Pct Part,Position ,Name,Street,City,State,Zip,Phone,Email,notes,precinc
 11,12,12.1,Democratic Committeewoman,,,,,,,,,12.1
 11,13,13.1,Democratic Committeeman,Joseph E Spradlin,3144 Campfire Drive,Lawrence,KS,66049,785 749 4107,spradlinjoe3@gmail.com,,13.1
 11,13,13.1,Democratic Committeewoman,Rita R. Spradlin,3144 Campfire Drive,Lawrence,KS,66049,785 749 4107,RITASPRADLIN@aol.com,,13.1
-6,14,14.1,Democratic Committeeman,,,,,,,,,14.1
+6,14,14.1,Democratic Committeeman,Cole Alexander Browne,,,,,785-843-0726,cbrowne@sunflower.com,,14.1
 6,14,14.1,Democratic Committeewoman,,,,,,,,,14.1
 11,15,15.1,Democratic Committeeman,David Berkowitz,2301 Willow Creek,Lawrence,KS,66049,785-843-0420,bwlaw@sunflower.com,,15.1
-11,15,15.1,Democratic Committeewoman,,,,,,,,,15.1
+11,15,15.1,Democratic Committeewoman,Ananda Bhatia,2505 Cornish Square Apt 206E,Lawrence,KS,66049,703-728-4293,ananda@kansasdems.org,,15.1
 12,16,16.1,Democratic Committeeman,,,,,,,,,16.1
-12,16,16.1,Democratic Committeewoman,,,,,,,,,16.1
+12,16,16.1,Democratic Committeewoman,Megan Green Stuke,2016 Atchison Ave,Lawrence,KS,66047,785-979-0983,mstuke@ddcenter.org (CONFIRM),,16.1
 6,17,17.1,Democratic Committeeman,Jacob M. Kipp,3208 W. 24th Ter,Lawrence,KS ,66047,785-841-2856,jacobkipp@cs.com,,17.1
 6,17,17.1,Democratic Committeewoman,Teresa K Wilke,3221 Yellowstone ,Lawrence,KS,66047,785 749 3577,teresawilke@sunflower.com,,17.1
 12,18,18.1,Democratic Committeeman,"Carl E. Locke, Jr",1331 Ranchero Dr,Lawrence,KS,66049,785-842-4337,lockecarle@gmail.com,,18.1
-12,18,18.1,Democratic Committeewoman,Teresa Malarky,913 Easy,Lawrence,KS,66049,785 760 3949,lotmalarky@yahoo.com,should this be Teresa Malarky?,18.1
-12,19,19.1,Democratic Committeeman,Marcus Williamson,4600 Muirfield,Lawrence,KS,66047,202 422-4240,Mpwilliamson@gmail.com,,19.1
+12,18,18.1,Democratic Committeewoman,,,,,,,,,18.1
+12,19,19.1,Democratic Committeeman,,,,,,,,,19.1
 12,19,19.1,Democratic Committeewoman,Norine Spears,1601 Inverness Drive,Lawrence,KS,66047,785-312-9359,norinespears@gmail.com,,19.1
-11,20,20.1,Democratic Committeeman,Mike Gaughan,304 Stetson Cir,Lawrence,KS ,66049,785-550-3697,mikegaughan@gmail.com,,20.1
-11,20,20.1,Democratic Committeewoman,Julia Gaughan,304 Stetson Circle,Lawrence,KS,66049,,julia.gilmoregaughan@gmail.com,,20.1
+11,20,20.1,Democratic Committeeman,,,,,,,,,20.1
+11,20,20.1,Democratic Committeewoman,,,,,,,,,20.1
 9,21,21.1,Democratic Committeeman,,,,,,,,,21.1
 9,21,21.1,Democratic Committeewoman,Caroline N. Grootes,1101 Sunset Dr,Lawrence,KS,66044,785 843 9193,cngrootes@gmail.com,,21.1
 6,22,22.1,Democratic Committeeman,,,,,,,,,22.1
-6,22,22.1,Democratic Committeewoman,,,,,,,,,22.1
+6,22,22.1,Democratic Committeewoman,Christina Ostmeyer,2533 Morningside,Lawrence,KS,66047,,christinaostmeyer@gmail.com,,22.1
 11,23,23.1,Democratic Committeeman,Ed Quick,1329 Kasold Drive C-1,Lawrence,KS,66049,785-838-3581,quickly@sunflower.com,,23.1
 11,23,23.1,Democratic Committeewoman,,,,,,,,,23.1
 12,24,24.1,Democratic Committeeman,David C. Goering,1573 Alvamar Drive,Lawrence,KS,66047,785-840-8051,dcgoering@gmail.com,,24.1
 12,24,24.1,Democratic Committeewoman,Janet Reeder,1609 Alvamar Dr,Lawrence,KS,66047,(785) 760-3914,janet.reeder50@yahoo.com,,24.1
 9,25,25.1,Democratic Committeeman,,,,,,,,,25.1
 9,25,25.1,Democratic Committeewoman,,,,,,,,,25.1
-10,26,26.1,Democratic Committeeman,,,,,,,,,26.1
+10,26,26.1,Democratic Committeeman,Dustin Struble,1717 Kentucky,Lawrence,KS,66044,803-920-0121,dustin.b.struble@gmail.com,,26.1
 10,26,26.1,Democratic Committeewoman,,,,,,,,,26.1
 10,27,27.1,Democratic Committeeman,,,,,,,,,27.1
 10,27,27.1,Democratic Committeewoman,,,,,,,,,27.1
@@ -57,66 +57,26 @@ Ward,Pct,Pct Part,Position ,Name,Street,City,State,Zip,Phone,Email,notes,precinc
 10,28,28.1,Democratic Committeewoman,Elizabeth L. Simpson,2125 Carolina Street,Lawrence,KS,66046,620 674-1459,lizlsimpson@yahoo.com,,28.1
 10,29,29.1,Democratic Committeeman,,,,,,,,,29.1
 10,29,29.1,Democratic Committeewoman,,,,,,,,,29.1
-10,30 S2,30.1,Democratic Committeeman,,,,,,,,,30.1
-10,30 S2,30.1,Democratic Committeewoman,,,,,,,,,30.1
-10,30 S3,30.2,Democratic Committeeman,,,,,,,,,30.2
-10,30 S3,30.2,Democratic Committeewoman,,,,,,,,,30.2
 5,31,31.1,Democratic Committeeman,Robert H Hagen,926 W 28th Terrace,Lawrence,KS,66046,"785-843-4127
-785-727-0318
-",rhagen@hagensmith.net,,31.1
+785-727-0318",rhagen@hagensmith.net,,31.1
 5,31,31.1,Democratic Committeewoman,Deborah R. Smith,926 W. 28th Terr,Lawrence,KS,66046,"785-843-4127
 785-727-0317",debsmith@hagensmith.net,,31.1
 5,32,32.1,Democratic Committeeman,,,,,,,,,32.1
 5,32,32.1,Democratic Committeewoman,,,,,,,,,32.1
 7,33,33.1,Democratic Committeeman,Craig Sundell,1530 Learnard Ave,Lawrence,KS,66044,785-841-7970,cjsund@swbell.net,,33.1
-7,33,33.1,Democratic Committeewoman,,,,,,,,,33.1
-7,34 S2,34.1,Democratic Committeeman,,,,,,,,,34.1
-7,34 S2,34.1,Democratic Committeewoman,Ellen Le Compte,2202 New Hampshire St,Lawrence,KS,66046,785 841 0456,ellen0503@att.net,,34.1
-7,34 S3,34.2,Democratic Committeeman,,,,,,,,,34.2
-7,34 S3,34.2,Democratic Committeewoman,,,,,,,,,34.2
-7,35 S2,35.1,Democratic Committeeman,Russ T. Hutchins,1103 E. 18th Street,Lawrence,KS,66044,785-312-4627,russh724@gmail.com,,35.1
-7,35 S2,35.1,Democratic Committeewoman,,,,,,,,,35.1
-7,35 S3,35.2,Democratic Committeeman,,,,,,,,,35.2
-7,35 S3,35.2,Democratic Committeewoman,,,,,,,,,35.2
-7,36 S2,36.1,Democratic Committeeman,John A. Davies,255 Pinecone Dr,Lawrence,KS,66046,785-749-3321,gunug@yahoo.com,,36.1
-7,36 S2,36.1,Democratic Committeewoman,,,,,,,,,36.1
-5,37 H10,37.1,Democratic Committeeman,,,,,,,,,37.1
-5,37 H10,37.1,Democratic Committeewoman,,,,,,,,,37.1
-5,38 H10,38.1,Democratic Committeeman,Kevin Hall,2929 Pairie Ct,Lawrence,KS,66046,785-285-0242,kevinhall96@yahoo.com,,38.1
-5,38 H10,38.1,Democratic Committeewoman,F. Jolene Andersen,2621 Bishop St,Lawrence,KS,66046,785-979-8813,andersenjo1402@gmail.com ,,38.1
-7,39,39.1,Democratic Committeeman,Philip Collison,933 Pennsylvania,Lawrence,KS,66044,785-843-8098,phil@pcollison.com,,39.1
+7,33,33.1,Democratic Committeewoman,Jennifer Muller,1801 Barker Ave,Lawrence,KS,66044,605-645-0313,jtrucano@gmail.com,,33.1
+7,39,39.1,Democratic Committeeman,,,,,,,,,39.1
 7,39,39.1,Democratic Committeewoman,Peggy A. Robinson,743 New York St,Lawrence,KS,66044,"785-550-5903
-785-841-6326
-",peggyrob62@gmail.com,,39.1
+785-841-6326",peggyrob62@gmail.com,,39.1
 7,40,40.1,Democratic Committeeman,Craig A. Stancliffe,1244 Rhode Island Street,Lawrence,KS,66044,785-842-6432,castancl@sunflower.com,,40.1
 7,40,40.1,Democratic Committeewoman,,,,,,,,,40.1
-4,41 S3 H46,41.1,Democratic Committeeman,Steven Stemmerman,315 Maiden Lane,Lawrence,KS,66044,785-550-5561,stevenstemmerman@gmail.com,,41.1
-4,41 S3 H46,41.1,Democratic Committeewoman,,,,,,,,,41.1
-4,41 S3 H45,41.2,Democratic Committeeman,,,,,,,,,41.2
-4,41 S3 H45,41.2,Democratic Committeewoman,,,,,,,,,41.2
-4,41 S2 H46,41.3,Democratic Committeeman,,,,,,,,,41.3
-4,41 S2 H46,41.3,Democratic Committeewoman,,,,,,,,,41.3
-4,41 S2 H45,41.4,Democratic Committeeman,,,,,,,,,41.4
-4,41 S2 H45,41.4,Democratic Committeewoman,,,,,,,,,41.4
-8,42 H46,42.1,Democratic Committeeman,,,,,,,,,42.1
-8,42 H46,42.1,Democratic Committeewoman,Jenna C. Groth,1516 Pin Oak Dr,Lawrence,KS,66044,913 961-2859,grothjenna@gmail.com,,42.1
-8,42 H45,42.2,Democratic Committeeman,Curtis D. Hall,1602 Riverridge Rd.,Lawrence,KS,66044,785-841-2181,hallcd@sbcglobal.net,,42.2
-8,42 H45,42.2  .3   .4,Democratic Committeewoman,"Carol M ""Cammie"" Braden",1406 Riverside Rd,Lawrence,KS,66044,785-979-3250,cammiebraden@gmail.com,,42.2
 12,43,43.1  .2  .3,Democratic Committeeman,,,,,,,,,43.1
 12,43,43.1  .2  .3,Democratic Committeewoman,Patricia Willer,331 North Carver Lane,Lawrence,KS,66049,803-673-9517,ppwiller@gmail.com,wl 10/31,43.1
-11,44 H45,44.1,Democratic Committeeman,,,,,,,,,44.1
-11,44 H45,44.1,Democratic Committeewoman,,,,,,,,,44.1
-11,44 H44,44.2,Democratic Committeeman,,,,,,,,,44.2
-11,44 H44,44.2,Democratic Committeewoman,,,,,,,,,44.2
-13,45,45.1,Democratic Committeeman,,,,,,,,,45.1
+13,45,45.1,Democratic Committeeman,Alan Cowles,1121 Stoneridge Dr,Law,KS,66049,785 331 2334,alancowles@outlook.com,,45.1
 13,45,45.1,Democratic Committeewoman,Gina Spade,1118 Rankin Dr,Lawrence,KS,66049,785 856 1235,shockergirl90@gmail.com,,45.1
-6,46 S3,46.1,Democratic Committeeman,Jamie Shew,4421 W 24th Pl,Lawrence,KS ,66047,,jamieshew@gmail.com,,46.1
-6,46 S3,46.1,Democratic Committeewoman,,,,,,,,,46.1
-6,46 S19,46.2,Democratic Committeeman,,,,,,,,,46.2
-6,46 S19,46.2,Democratic Committeewoman,,,,,,,,,46.2
 12,47,47.1,Democratic Committeeman,,,,,,,,,47.1
 12,47,47.1,Democratic Committeewoman,,,,,,,,,47.1
-12,48,48.1,Democratic Committeeman,,,,,,,,,48.1
+12,48,48.1,Democratic Committeeman,Scott Allegrucci,4525 Grove Dr,Lawrence,KS,66049,785-764-1992,allegrooch@gmail.com,,48.1
 12,48,48.1,Democratic Committeewoman,,,,,,,,,48.1
 13,49,49.1,Democratic Committeeman,Bruce Roberts,2250 Lakepointe Dr.  Unit 1004,Lawrence,KS,66049,785-331-3310,jbruceroberts@gmail.com,,49.1
 13,49,49.1,Democratic Committeewoman,Harlanne Roberts,2250 Lake Pointe Dr.  Unit 1004,Lawrence,KS,66049,785-331-3310,harlanne.roberts@gmail.com,,49.1
@@ -127,74 +87,24 @@ Ward,Pct,Pct Part,Position ,Name,Street,City,State,Zip,Phone,Email,notes,precinc
 1,51,51.1  .2  .3,Democratic Committeewoman,,,,,,,,,51.1
 3,52,52.1  .2  .3 ,Democratic Committeeman,,,,,,,,,52.1
 3,52,52.1  .2  .3 ,Democratic Committeewoman,,,,,,,,,52.1
-3,53 H10,53.1  .2  .3,Democratic Committeewoman,,,,,,,,,53.1
-3,53 H10 ,53.1  .2  .3,Democratic Committeeman,,,,,,,,,53.1
-3,53 H42,53.4  .5,Democratic Committeeman,Mike Keltner,311 Leander St,Eudora,KS,66025,620 886 0212,mikekeltnerml@gmail.com,,53.4
-3,53 H42,53.4  .5,Democratic Committeewoman,Pennie von Achen,1346 E 2350 Road,Eudora,KS,66025,785-766-7174,squampva@aol.com,,53.4
 6,54,54.1,Democratic Committeeman,Scott Durham,809 E. 12th St,Eudora,KS,66025,913-217-8477,scott.m.durham@gmail.com,,54.1
 6,54,54.1,Democratic Committeewoman,Rebecca Plate,1317 Mulberry Court,Eudora,KS,66025,913-909-5220,beckyplate.rn@gmail.com,,54.1
-4,55 S3 H45,55.1,Democratic Committeeman,,,,,,,,,55.1
-4,55 S3 H45,55.1,Democratic Committeewoman,,,,,,,,,55.1
-4,55 S3 H46,55.2,Democratic Committeeman,,,,,,,,,55.2
-4,55 S3 H46,55.2,Democratic Committeewoman,,,,,,,,,55.2
-4,55 S2 H45,55.3,Democratic Committeeman,,,,,,,,,55.3
-4,55 S2 H45,55.3,Democratic Committeewoman,Carol C. Schmitt,2031 E 1250 Road,Lawrence,KS,66044,785-393-6312,carolclementi57@gmail.com,,55.3
-1,56 S19,56.1  .2  .3  .5,Democratic Committeeman,Dennis Stauffer,1446 E 700 Road ,Lawrence,KS,66049,785-843-6778,mdstauffer@gmail.com,,56.1
-1,56 S19,56.1  .2  .3  .5,Democratic Committeewoman,Martha J. Coffman,803 N 1500 Road ,Lawrence,KS,66049,785-749-1196,martisfarm@yahoo.com,,56.1
-1,56 S2,56.4,Democratic Committeeman,,,,,,,,,56.4
-1,56 S2,56.4,Democratic Committeewoman,,,,,,,,,56.4
-1,57 S2,57.1  .2  .4,Democratic Committeeman,,,,,,,,,57.1
-1,57 S2,57.1  .2  .4,Democratic Committeewoman,Emily A. Peters,1975 E 850th Road,Lecompton,KS,66050,605-261-0328,emptrs@gmail.com,,57.1
-1,57 S19,57.3,Democratic Committeeman,,,,,,,,,57.3
-1,57 S19,57.3,Democratic Committeewoman,,,,,,,,,57.3
 1,58,58.1,Democratic Committeeman,,,,,,,,,58.1
 1,58,58.1,Democratic Committeewoman,,,,,,,,,58.1
-2,59 H54,59.1  .2  .4,Democratic Committeeman,,,,,,,,,59.1
-2,59 H54,59.1  .2  .4,Democratic Committeewoman,,,,,,,,,59.1
-2,59 H45,59.3  .5  .6,Democratic Committeeman,Henry L. Johns,899 E 800 Road ,Lawrence,KS,66047,785-865-9894,hljohns@sunflower.com,,59.3
-2,59 H45,59.3  .5  .6,Democratic Committeewoman,Karen A Johns,899 E 800 Road ,Lawrence,KS,66047,785-865-9894,karenjohns57@gmail.com,,59.3
 2,60,60.1  .2  .3,Democratic Committeeman,Robert M. Ford,704 Baker Street,Baldwin City,KS,66006,785-312-4184,avocadobob1418@gmail.com,PO Box 783,60.1
-2,60,60.1  .2  .3,Democratic Committeewoman,Margaret A Wallert,1009 Bluestem Dr,Baldwin City,KS,66006,785-312-4006,pswall47@gmail.com,,60.1
-2,61,61.1  .2  .3  .4,Democratic Committeeman,Anthony L Brown,702 1st Street,Baldwin City,KS,66006,785-304-9039,tbrown@baldwincity.org,,61.1
+2,60,60.1  .2  .3,Democratic Committeewoman,,,,,,,,,60.1
+2,61,61.1  .2  .3  .4,Democratic Committeeman,,,,,,,,,61.1
 2,61,61.1  .2  .3  .4,Democratic Committeewoman,,,,,,,,,61.1
 2,62,62.1-.6,Democratic Committeeman,,,,,,,,,62.1
 2,62,62.1-.6,Democratic Committeewoman,,,,,,,,,62.1
 3,63,63.1-.3,Democratic Committeeman,,,,,,,,,63.1
 3,63,63.1-.3,Democratic Committeewoman,,,,,,,,,63.1
-8,64 H45,64.1  .2,Democratic Committeeman,,,,,,,,,64.1
-8,64 H45,64.1  .2,Democratic Committeewoman,M. J. Brune,1943 E 1125 Road ,Lawrence,KS,66049,"785-393-0754
-785-841-1379
-",mbruneii@yahoo.com,,64.1
-8,64 H46,64.3,Democratic Committeeman,,,,,,,,,64.3
-8,64 H46,64.3,Democratic Committeewoman,,,,,,,,,64.3
-5,65 H10,65.1  .2  .4,Democratic Committeeman,,,,,,,,,65.1
-5,65 H10,65.1  .2  .4,Democratic Committeewoman,,,,,,,,,65.1
-5,65 H46,65.3,Democratic Committeeman,,,,,,,,,65.3
-5,65 H46,65.3,Democratic Committeewoman,,,,,,,,,65.3
-6,66 H45 S19,66.1  .2,Democratic Committeeman,,,,,,,,,66.1
-6,66 H45 S19,66.1  .2,Democratic Committeewoman,,,,,,,,,66.1
-6,66 H44 S3,66.3,Democratic Committeeman,,,,,,,,,66.3
-6,66 H44 S3,66.3,Democratic Committeewoman,,,,,,,,,66.3
-6,66 H45 S3,66.4,Democratic Committeeman,,,,,,,,,66.4
-6,66 H45 S3,66.4,Democratic Committeewoman,,,,,,,,,66.4
-6,66 H10 S19,66.5,Democratic Committeeman,,,,,,,,,66.5
-6,66 H10 S19,66.5,Democratic Committeewoman,,,,,,,,,66.5
-6,66 H10 S3,66.7,Democratic Committeeman,,,,,,,,,66.7
-6,66 H10 S3,66.7,Democratic Committeewoman,,,,,,,,,66.7
-2,67 H54 S19,67.1  .2,Democratic Committeeman,,,,,,,,,67.1
-2,67 H54 S19,67.1  .2,Democratic Committeewoman,,,,,,,,,67.1
-2,67 H45 S19,67.3  .4,Democratic Committeeman,,,,,,,,,67.3
-2,67 H45 S19,67.3  .4,Democratic Committeewoman,Nancy Noyes-Ward,799 E 1150 Road ,Baldwin City,KS,66006,785-551-9633,moesart3@yahoo.com,,67.3
-2,67 H45 S3,67.5  .6,Democratic Committeeman,,,,,,,,,67.5
-2,67 H45 S3,67.5  .6,Democratic Committeewoman,,,,,,,,,67.5
-2,67 H54 S3,67.7  .8,Democratic Committeeman,,,,,,,,,67.7
-2,67 H54 S3,67.7  .8,Democratic Committeewoman,,,,,,,,,67.7
 8,68,68,,,,,,,,,,68
 5,69,69,,,,,,,,,,69
 13,70,70.1,Democratic Committeeman,,,,,,,,,70.1
 13,70,70.1,Democratic Committeewoman,,,,,,,,,70.1
-13,71,71.1,Democratic Committeeman,,,,,,,,,71.1
-13,71,71.1,Democratic Committeewoman,,,,,,,,,71.1
+13,71,71.1,Democratic Committeeman,Kerry Gooch,470 Hutton Circle,Lawrence,KS,66049,316-519-5845,kerryleegooch@gmail.com,,71.1
+13,71,71.1,Democratic Committeewoman,Brooklynne Mosley,420 Hutton Circle,Lawrence,KS,66049,785-550-7914,brooklynne.mosley@gmail.com,,71.1
 13,74,74.1,Democratic Committeeman,,,,,,,,,74.1
 13,74,74.1,Democratic Committeewoman,,,,,,,,,74.1
 13,75,75,,,,,,,,,,75
@@ -202,3 +112,90 @@ Ward,Pct,Pct Part,Position ,Name,Street,City,State,Zip,Phone,Email,notes,precinc
 8,76,76.1,Democratic Committeewoman,,,,,,,,,76.1
 7,77,77.1,Democratic Committeeman,,,,,,,,,77.1
 7,77,77.1,Democratic Committeewoman,,,,,,,,,77.1
+10,30 S2,30.1,Democratic Committeeman,,,,,,,,,30.1
+10,30 S2,30.1,Democratic Committeewoman,,,,,,,,,30.1
+10,30 S3,30.2,Democratic Committeeman,,,,,,,,,30.2
+10,30 S3,30.2,Democratic Committeewoman,,,,,,,,,30.2
+7,34 S2,34.1,Democratic Committeeman,,,,,,,,,34.1
+7,34 S2,34.1,Democratic Committeewoman,,,,,,,,,34.1
+7,34 S3,34.2,Democratic Committeeman,,,,,,,,,34.2
+7,34 S3,34.2,Democratic Committeewoman,,,,,,,,,34.2
+7,35 S2,35.1,Democratic Committeeman,Russ T. Hutchins,1103 E. 18th Street,Lawrence,KS,66044,785-312-4627,russh724@gmail.com,,35.1
+7,35 S2,35.1,Democratic Committeewoman,Melinda Henderson,,,,,,melin@sunflower.com,,35.1
+7,35 S3,35.2,Democratic Committeeman,,,,,,,,,35.2
+7,35 S3,35.2,Democratic Committeewoman,,,,,,,,,35.2
+7,36 S2,36.1,Democratic Committeeman,John A. Davies,255 Pinecone Dr,Lawrence,KS,66046,785-749-3321,gunug@yahoo.com,,36.1
+7,36 S2,36.1,Democratic Committeewoman,,,,,,,,,36.1
+5,37 H10,37.1,Democratic Committeeman,,,,,,,,,37.1
+5,37 H10,37.1,Democratic Committeewoman,,,,,,,,,37.1
+5,38 H10,38.1,Democratic Committeeman,Kevin Hall,2929 Pairie Ct,Lawrence,KS,66046,785-285-0242,kevinhall96@yahoo.com,,38.1
+5,38 H10,38.1,Democratic Committeewoman,F. Jolene Andersen,2621 Bishop St,Lawrence,KS,66046,785-979-8813,andersenjo1402@gmail.com ,,38.1
+4,41 S2 H45,41.4,Democratic Committeeman,,,,,,,,,41.4
+4,41 S2 H45,41.4,Democratic Committeewoman,,,,,,,,,41.4
+4,41 S2 H46,41.3,Democratic Committeeman,,,,,,,,,41.3
+4,41 S2 H46,41.3,Democratic Committeewoman,,,,,,,,,41.3
+4,41 S3 H45,41.2,Democratic Committeeman,,,,,,,,,41.2
+4,41 S3 H45,41.2,Democratic Committeewoman,,,,,,,,,41.2
+4,41 S3 H46,41.1,Democratic Committeeman,Steven Stemmerman,315 Maiden Lane,Lawrence,KS,66044,785-550-5561,stevenstemmerman@gmail.com,,41.1
+4,41 S3 H46,41.1,Democratic Committeewoman,,,,,,,,,41.1
+8,42 H45,42.2,Democratic Committeeman,Curtis D. Hall,1602 Riverridge Rd.,Lawrence,KS,66044,785-841-2181,hallcd@sbcglobal.net,,42.2
+8,42 H45,42.2  .3   .4,Democratic Committeewoman,"Carol M ""Cammie"" Braden",1406 Riverside Rd,Lawrence,KS,66044,785-979-3250,cammiebraden@gmail.com,,42.2
+8,42 H46,42.1,Democratic Committeeman,,,,,,,,,42.1
+8,42 H46,42.1,Democratic Committeewoman,Jenna C. Groth,1516 Pin Oak Dr,Lawrence,KS,66044,913 961-2859,grothjenna@gmail.com,,42.1
+11,44 H44,44.2,Democratic Committeeman,,,,,,,,,44.2
+11,44 H44,44.2,Democratic Committeewoman,,,,,,,,,44.2
+11,44 H45,44.1,Democratic Committeeman,,,,,,,,,44.1
+11,44 H45,44.1,Democratic Committeewoman,,,,,,,,,44.1
+6,46 S19,46.2,Democratic Committeeman,,,,,,,,,46.2
+6,46 S19,46.2,Democratic Committeewoman,,,,,,,,,46.2
+6,46 S3,46.1,Democratic Committeeman,Steven X. Davis,4100 W 24th Place Apt E14,Lawrence,KS ,66047,913-683-3719,stevenxdavis@yahoo.com,,46.1
+6,46 S3,46.1,Democratic Committeewoman,Bridget Smith,2729 Inverness Ct,Lawrence,KS,66047,785-424-5594 (BAD NUMBER),,,46.1
+3,53 H10,53.1  .2  .3,Democratic Committeewoman,,,,,,,,,53.1
+3,53 H10 ,53.1  .2  .3,Democratic Committeeman,,,,,,,,,53.1
+3,53 H42,53.4  .5,Democratic Committeeman,,,,,,,,,53.4
+3,53 H42,53.4  .5,Democratic Committeewoman,Pennie von Achen,1346 E 2350 Road,Eudora,KS,66025,785-766-7174,squampva@aol.com,,53.4
+4,55 S2 H45,55.3,Democratic Committeeman,,,,,,,,,55.3
+4,55 S2 H45,55.3,Democratic Committeewoman,Carol C. Schmitt,2031 E 1250 Road,Lawrence,KS,66044,785-393-6312,carolclementi57@gmail.com,,55.3
+4,55 S3 H45,55.1,Democratic Committeeman,,,,,,,,,55.1
+4,55 S3 H45,55.1,Democratic Committeewoman,,,,,,,,,55.1
+4,55 S3 H46,55.2,Democratic Committeeman,,,,,,,,,55.2
+4,55 S3 H46,55.2,Democratic Committeewoman,,,,,,,,,55.2
+1,56 S19,56.1  .2  .3  .5,Democratic Committeeman,Dennis Stauffer,1446 E 700 Road ,Lawrence,KS,66049,785-843-6778,mdstauffer@gmail.com,,56.1
+1,56 S19,56.1  .2  .3  .5,Democratic Committeewoman,Terry Manies,370 N 1700 Road,Lawrence,KS,66050,785-550-7286,,,56.1
+1,56 S2,56.4,Democratic Committeeman,,,,,,,,,56.4
+1,56 S2,56.4,Democratic Committeewoman,,,,,,,,,56.4
+1,57 S19,57.3,Democratic Committeeman,,,,,,,,,57.3
+1,57 S19,57.3,Democratic Committeewoman,,,,,,,,,57.3
+1,57 S2,57.1  .2  .4,Democratic Committeeman,,,,,,,,,57.1
+1,57 S2,57.1  .2  .4,Democratic Committeewoman,Emily A. 'Peters' Riner,1975 E 850th Road,Lecompton,KS,66050,605-261-0328,emptrs@gmail.com,"*Name changed to Riner, JShew just to change it on spreadsheet",57.1
+2,59 H45,59.3  .5  .6,Democratic Committeeman,Henry L. Johns,899 E 800 Road ,Lawrence,KS,66047,785-865-9894,hljohns@sunflower.com,,59.3
+2,59 H45,59.3  .5  .6,Democratic Committeewoman,Karen A Johns,899 E 800 Road ,Lawrence,KS,66047,785-865-9894,karenjohns57@gmail.com,,59.3
+2,59 H54,59.1  .2  .4,Democratic Committeeman,,,,,,,,,59.1
+2,59 H54,59.1  .2  .4,Democratic Committeewoman,,,,,,,,,59.1
+8,64 H45,64.1  .2,Democratic Committeeman,,,,,,,,,64.1
+8,64 H45,64.1  .2,Democratic Committeewoman,M. J. Brune,1943 E 1125 Road ,Lawrence,KS,66049,"785-393-0754
+785-841-1379",mbruneii@yahoo.com,,64.1
+8,64 H46,64.3,Democratic Committeeman,,,,,,,,,64.3
+8,64 H46,64.3,Democratic Committeewoman,,,,,,,,,64.3
+5,65 H10,65.1  .2  .4,Democratic Committeeman,,,,,,,,,65.1
+5,65 H10,65.1  .2  .4,Democratic Committeewoman,,,,,,,,,65.1
+5,65 H46,65.3,Democratic Committeeman,,,,,,,,,65.3
+5,65 H46,65.3,Democratic Committeewoman,,,,,,,,,65.3
+6,66 H10 S19,66.5,Democratic Committeeman,,,,,,,,,66.5
+6,66 H10 S19,66.5,Democratic Committeewoman,,,,,,,,,66.5
+6,66 H10 S3,66.7,Democratic Committeeman,,,,,,,,,66.7
+6,66 H10 S3,66.7,Democratic Committeewoman,,,,,,,,,66.7
+6,66 H44 S3,66.3,Democratic Committeeman,,,,,,,,,66.3
+6,66 H44 S3,66.3,Democratic Committeewoman,,,,,,,,,66.3
+6,66 H45 S19,66.1  .2,Democratic Committeeman,,,,,,,,,66.1
+6,66 H45 S19,66.1  .2,Democratic Committeewoman,,,,,,,,,66.1
+6,66 H45 S3,66.4,Democratic Committeeman,,,,,,,,,66.4
+6,66 H45 S3,66.4,Democratic Committeewoman,,,,,,,,,66.4
+2,67 H45 S19,67.3  .4,Democratic Committeeman,,,,,,,,,67.3
+2,67 H45 S19,67.3  .4,Democratic Committeewoman,Nancy Noyes-Ward,799 E 1150 Road ,Baldwin City,KS,66006,785-551-9633,moesart3@yahoo.com,,67.3
+2,67 H45 S3,67.5  .6,Democratic Committeeman,,,,,,,,,67.5
+2,67 H45 S3,67.5  .6,Democratic Committeewoman,,,,,,,,,67.5
+2,67 H54 S19,67.1  .2,Democratic Committeeman,,,,,,,,,67.1
+2,67 H54 S19,67.1  .2,Democratic Committeewoman,,,,,,,,,67.1
+2,67 H54 S3,67.7  .8,Democratic Committeeman,,,,,,,,,67.7
+2,67 H54 S3,67.7  .8,Democratic Committeewoman,,,,,,,,,67.7
