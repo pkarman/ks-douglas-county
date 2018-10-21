@@ -246,3 +246,15 @@ nav > ul > li:hover > a > .caret {
 .winner {
   background-color: #f7f28f;
 }
+
+table#precincts {
+  width: 30%;
+}
+
+table#precincts th {
+  text-align: left;
+}
+
+table#precincts td {
+  border-bottom: 1px solid #aaa;
+}

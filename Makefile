@@ -21,3 +21,6 @@ deploy:
 
 districts:
 	ruby bin/build-precinct-districts > precinct-with-districts.csv
+
+ward-table:
+	ruby bin/ward-list-maker > wards.html

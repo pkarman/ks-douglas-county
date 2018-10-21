@@ -1,0 +1,41 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+wards = JSON.parse(File.read('wards.json'))
+
+header = <<~HTML
+<html>
+ <head>
+  <title>Douglas County, Kansas - Precincts and Wards</title>
+  <link rel="stylesheet" type="text/css" href="map.css">
+ </head>
+ <body>
+  <table id="precincts">
+   <caption>Precincts and Wards</caption>
+   <tbody>
+   <tr><th>Precinct</th><th>Ward</th></tr>
+HTML
+
+footer = <<~HTML
+  </table>
+ </body>
+</html>
+HTML
+
+puts header
+
+p2w = {}
+wards.keys.each do |ward_name|
+  ward = wards[ward_name]
+  ward['precincts'].each do |precinct_name|
+    p2w[precinct_name] = ward_name
+  end
+end
+
+p2w.keys.sort.each do |precinct_name|
+  ward_name = p2w[precinct_name]
+  puts "<tr><td>#{precinct_name}</td><td>#{ward_name}</td></tr>"
+end
+
+puts footer
