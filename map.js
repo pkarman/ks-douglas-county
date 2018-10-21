@@ -202,14 +202,23 @@ var eachPrecinctFeature = function(p, layer) {
 
 var getPrecinctColor = function(feature) {
   var precinctNumber = feature.properties.PRECINCTID;
+  var fullPrecinctNumber = feature.properties.PPID;
   var color;
   $.each(wards, function(k, val) {
     $.each(val.precincts, function(idx, p_id) {
-      if (p_id == precinctNumber) {
+      if (feature.properties.ward) {
+        return false;
+      }
+      if (p_id == fullPrecinctNumber) {
+        color = val.color;
+        feature.properties.ward = k;
+      }
+      else if (p_id == precinctNumber) {
         color = val.color;
         feature.properties.ward = k;
       }
     });
+    if (color) return false;
   });
   return color;
 };
