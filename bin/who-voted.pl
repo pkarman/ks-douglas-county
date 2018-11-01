@@ -112,7 +112,7 @@ my $early_adv_ballot_voters = parse_csv("$in_dir/$adv_returned_file");
 my $csv = Text::CSV_XS->new( { binary => 1, auto_diag => 1, eol => "\n" } );
 for my $voter_id ( keys %$registered_voters ) {
     my $voter = $registered_voters->{$voter_id};
-    next if $voter->{party} eq 'Republican';
+    next unless $voter->{party} eq 'Democratic';
     my $voted_in_person = exists $early_in_person_voters->{$voter_id};
     my $voted_via_advb  = exists $early_adv_ballot_voters->{$voter_id};
     my $sent_adv_ballot = exists $sent_adv_ballot->{$voter_id};
