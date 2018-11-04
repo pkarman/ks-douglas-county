@@ -4,6 +4,7 @@ use warnings;
 use Text::CSV_XS;
 use Data::Dump qw( dump );
 use File::Path qw( make_path );
+use DBM::Deep;
 
 my $usage
     = "$0 in_dir out_dir voter_file.csv daily-early-voter.csv daily-adv-mail-sent.csv daily-adv-returned.csv";
@@ -13,6 +14,8 @@ my $voter_file         = shift or die $usage;
 my $early_voter_file   = shift or die $usage;
 my $adv_mail_sent_file = shift or die $usage;
 my $adv_returned_file  = shift or die $usage;
+
+tie my %voter_phones, 'DBM::Deep', 'ks-voter-phones.db';
 
 sub trim {
     $_[0] =~ s/^\s+|\s+$//g;
@@ -57,6 +60,16 @@ sub parse_row {
             )
         ),
     };
+    if ( !$voter->{phone} ) {
+        my $alt_phones = $voter_phones{ $voter->{id} }->{phones};
+        if ($alt_phones) {
+
+            #warn "Found alt phones " . dump($alt_phones);
+            #warn "Found alt phones " . join( ' ', @$alt_phones );
+            $voter->{phone} = join( ' or ', keys %$alt_phones );
+        }
+    }
+
     return $voter;
 }
 
@@ -83,7 +96,7 @@ my %out_filehandles = ();
 make_path($out_dir);
 
 sub get_precinct_filehandle {
-    my ($voter)  = @_;
+    my ( $voter, $csv ) = @_;
     my $precinct = $voter->{precinct};
     my $filename = "$out_dir/$precinct-not-voted.csv";
     if ( $out_filehandles{$filename} ) {
@@ -95,6 +108,8 @@ sub get_precinct_filehandle {
 
     $out_filehandles{$filename} = $fh;
 
+    $csv->print( $fh, [ "10AM", "2PM", "5PM", "Call 1", "Call 2" ] );
+
     return $fh;
 }
 
@@ -102,6 +117,8 @@ my $registered_voters       = parse_csv("$in_dir/$voter_file");
 my $early_in_person_voters  = parse_csv("$in_dir/$early_voter_file");
 my $sent_adv_ballot         = parse_csv("$in_dir/$adv_mail_sent_file");
 my $early_adv_ballot_voters = parse_csv("$in_dir/$adv_returned_file");
+
+my $checkboxes = "LM  WN  WX  MV  DC  HO";
 
 # - data will need to be organized by precinct;
 #	- each precinct list will have data in three columns,
@@ -123,7 +140,9 @@ for my $voter_id ( keys %$registered_voters ) {
     # if we get here the person has not yet voted
     #dump $voter;
 
-    my $fh = get_precinct_filehandle($voter);
+    my $fh = get_precinct_filehandle( $voter, $csv );
     my $column = sprintf( "%s - %s", $voter->{name}, $voter->{phone} );
-    $csv->print( $fh, [ $column, $column, $column ] ) or $csv->error_diag;
+    $csv->print( $fh,
+        [ $column, $column, $column, $checkboxes, $checkboxes ] )
+        or $csv->error_diag;
 }
