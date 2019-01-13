@@ -16,9 +16,14 @@ var makePrecinctSelector = function() {
   $dropdown.change(function() {
     var precinctPicked = $dropdown.find(':selected').text();
     if (!precinctPicked) return;
+    window.location.hash = "#precinct="+precinctPicked; // remember in url
     showPrecinct(precinctPicked);
   });
 };
+
+function setPrecinctSelector(precinctId) {
+  $('#precinct-list').val(precinctId);
+}
 
 L.Util.ajax("people.json").then(function(data) {
   people = data;
@@ -267,9 +272,13 @@ geojson.on('data:loaded', function() {
   precincts.sort(function(a,b) { return a - b });
   makePrecinctSelector();
   // populate form from url params if present
-  var urlParams = getJsonFromUrl();
-  if (urlParams['precinct']) {
-    showPrecinct(urlParams['precinct']);
+  var urlHashParams = getJsonFromUrl(true);
+  if (urlHashParams['precinct']) {
+    showPrecinct(urlHashParams['precinct']);
+  }
+  var urlQueryParams = getJsonFromUrl();
+  if (urlQueryParams['precinct']) {
+    showPrecinct(urlQueryParams['precinct']);
   }
 });
 
@@ -482,6 +491,7 @@ function showPrecinct(precinctId) {
   if (precinctId.match(/^\d+$/)) {
     precinctId = precinctId + '.1';
   }
+  setPrecinctSelector(precinctId);
   var found = false;
   geojson.eachLayer(function(layer) {
     if (found) return;
