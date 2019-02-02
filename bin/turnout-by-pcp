@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'csv'
+require 'pp'
+
+@stats = JSON.parse(File.read('douglas-county-voters-stats.json'))
+@people = JSON.parse(File.read('precinct-to-people.json'))
+@precinct_names = @stats['names']
+
+def find_name(vtd)
+  found = ''
+  @precinct_names.each do |name, vtdc|
+    next unless vtd == vtdc
+    found = name unless name.length < found.length
+  end
+  found
+end
+
+def find_vtd(precinct_name)
+  @precinct_names[precinct_name]
+end
+
+def precinct_to_persons(precinct_name)
+  vtd_code = find_vtd(precinct_name)
+#  puts "precinct_name:#{precinct_name} vtd:#{vtd_code}"
+  @people[vtd_code]
+end
+
+CSV.open('douglas-county-turnout-stats.csv', 'wb') do |csv|
+  csv << ['precinct', 'election', 'party', 'registered', 'turnout', 'percentage', 'people']
+  @stats.keys.each do |vtd|
+    next if vtd == 'names'
+
+    precinct_name = find_name(vtd)
+    persons = precinct_to_persons(precinct_name)
+    people_names = (persons || [{}]).map { |p| p['Name'] }.uniq.join(';')
+
+    @stats[vtd].each do |election, parties|
+      next unless election.match(/^GN/)
+      parties.each do |party_name, s|
+        csv << [precinct_name, election, party_name, s['r'], s['c'], s['p'].round(2), people_names]
+      end
+    end
+  end
+end

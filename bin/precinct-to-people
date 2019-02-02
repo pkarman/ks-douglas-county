@@ -1,0 +1,44 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'csv'
+require 'pp'
+
+@people = JSON.parse(File.read('people.json'))
+@stats = JSON.parse(File.read('douglas-county-voters-stats.json'))
+@precinct_names = @stats['names']
+
+def find_vtd(precinct_name)
+  @precinct_names[precinct_name]
+end
+
+def make_vtd_to_pcp
+  @vtd2pcp = {}
+  @people.each do |person|
+    next unless person['Name']
+    parts = person["Pct Part"].to_s.split(/\ +/)
+#    puts "parts:#{parts.pretty_inspect}"
+    parts.each do |part|
+      if part.match(/^\d+\.\d+$/)
+        vtd_code = find_vtd(part) || find_vtd(part.sub(/\.\d+/, ''))
+        fail "no vtd for #{part}" unless vtd_code
+        @vtd2pcp[vtd_code] ||= []
+        @vtd2pcp[vtd_code] << person
+      elsif part.match(/^\.\d+$/)
+        precinct = parts[0].match(/^(\d+)\./)[1]
+        precinct_id = precinct + part
+        vtd_code = find_vtd(precinct_id) || find_vtd(precinct)
+        fail "no vtd for #{precinct_id}" unless vtd_code
+        @vtd2pcp[vtd_code] ||= []
+        @vtd2pcp[vtd_code] << person
+      else
+        fail "uncertain part #{part}"
+      end
+    end
+  end
+end
+
+make_vtd_to_pcp
+
+File.write('precinct-to-people.json', @vtd2pcp.to_json)
+
