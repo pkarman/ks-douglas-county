@@ -1,10 +1,41 @@
-var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places, precincts, voter_stats;
+var map, geojson, lastPoly, info, wards, people, lastMarker, polling_places, precincts, voter_stats, vtd2people;
 var ks_house, ks_senate;
 var GEO_LOOKUP = 'geo-lookup.php?address=';
 var POLL_CACHE = {};
 var election_stat_ids = ['GN2008', 'GN2010', 'GN2012', 'GN2014', 'GN2016', 'PR2018', 'GN2018'];
 
 precincts = []; // will populate async after geojson loads
+
+// https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
+function getJsonFromUrl(hashBased) {
+  var query;
+  if(hashBased) {
+    var pos = location.href.indexOf("#");
+    if(pos==-1) return [];
+    query = location.href.substr(pos+1);
+  } else {
+    query = location.search.substr(1);
+  }
+  var result = {};
+  query.split("&").forEach(function(part) {
+    if(!part) return;
+    part = part.split("+").join(" "); // replace every + with space, regexp-free version
+    var eq = part.indexOf("=");
+    var key = eq>-1 ? part.substr(0,eq) : part;
+    var val = eq>-1 ? decodeURIComponent(part.substr(eq+1)) : "";
+    var from = key.indexOf("[");
+    if(from==-1) result[decodeURIComponent(key)] = val;
+    else {
+      var to = key.indexOf("]",from);
+      var index = decodeURIComponent(key.substring(from+1,to));
+      key = decodeURIComponent(key.substring(0,from));
+      if(!result[key]) result[key] = [];
+      if(!index) result[key].push(val);
+      else result[key][index] = val;
+    }
+  });
+  return result;
+}
 
 var makePrecinctSelector = function() {
   var $dropdown = $('#precinct-list');
@@ -25,64 +56,55 @@ function setPrecinctSelector(precinctId) {
   $('#precinct-list').val(precinctId);
 }
 
+function vtdForPrecinct(props) {
+  var ct_id = props.PRECINCTID + '.' + props.SUBPRECINC;
+  var vtd_code = voter_stats['names'][props.NAME] || voter_stats['names'][ct_id];
+  return vtd_code;
+}
+
 L.Util.ajax("people.json").then(function(data) {
   people = data;
+  if (dataAllLoaded()) setUpMaps();
 });
 L.Util.ajax("wards.json").then(function(data) {
   wards = data;
+  if (dataAllLoaded()) setUpMaps();
 });
 L.Util.ajax("polling.json").then(function(data) {
   polling_places = data;
+  if (dataAllLoaded()) setUpMaps();
 });
 L.Util.ajax("douglas-county-voters-stats.json").then(function(data) {
   voter_stats = data;
+  if (dataAllLoaded()) setUpMaps();
 });
+L.Util.ajax("precinct-to-people.json").then(function(data) {
+  vtd2people = data;
+  if (dataAllLoaded()) setUpMaps();
+});
+
+function dataAllLoaded() {
+  if (people && wards && polling_places && voter_stats && vtd2people) {
+    return true;
+  }
+
+  return false;
+}
+
+function peopleForPPID(ppid) {
+  return $.grep(people, function(p, idx) { return ppid == p.precinctnumber });
+}
 
 var persons_for_precinct = function(props) {
   //console.log(props);
   if (props.people) return props.people;
 
-  var p = [];
-  var precinct_id = [props.PRECINCTID, props.SUBPRECINC].join('.');
+  var vtd = vtdForPrecinct(props);
+  //if (!vtd) console.log("No VTD for precinct", props);
 
-  if (!PRECINCT2PERSON) {
-    buildPrecinct2Person();
-  }
-
-  if (PRECINCT2PERSON[precinct_id]) {
-    p = PRECINCT2PERSON[precinct_id];
-  }
+  var p = vtd2people[vtd] || peopleForPPID(props.PPID) || [];
   props['people'] = p;
   return p;
-};
-
-var PRECINCT2PERSON;
-function buildPrecinct2Person() {
-  PRECINCT2PERSON = {};
-  $.each(people, function(idx, person) {
-    if (!person.Name) return true;
-    var parts = (person["Pct Part"] + "").split(/\ +/);
-    //console.log(person, parts);
-    $.each(parts, function(idx2, part) {
-      if (part.match(/^\d+\.\d+$/)) {
-        if (!PRECINCT2PERSON[part]) {
-          PRECINCT2PERSON[part] = [];
-        }
-        PRECINCT2PERSON[part].push(person);
-      }
-      else if (part.match(/^\.\d+$/)) {
-        var precinct = parts[0].match(/^(\d+)\./)[1];
-        var precinct_id = precinct + part;
-        if (!PRECINCT2PERSON[precinct_id]) {
-          PRECINCT2PERSON[precinct_id] = [];
-        }
-        PRECINCT2PERSON[precinct_id].push(person);
-      }
-      else {
-        console.log("Unknown precinct format:", part);
-      }
-    });
-  });
 };
 
 var find_polling_place = function(props) {
@@ -132,8 +154,7 @@ var precinct_details = function(props, ks_house_props, ks_senate_props) {
   els.append(tbl);
 
   // voter stats
-  var ct_id = props.PRECINCTID + '.' + props.SUBPRECINC;
-  var vtd_code = voter_stats['names'][precinct_name] || voter_stats['names'][ct_id];
+  var vtd_code = vtdForPrecinct(props);
 
   if (!vtd_code) return els.html();
 
@@ -238,144 +259,116 @@ var getDashArray = function(feature) {
   return dashArray;
 };
 
-var opts = {
-  style: function(feature) {
-    var precinctColor = getPrecinctColor(feature);
-    var dashArray = getDashArray(feature);
-    var lineColor = '#777';
-    var fillPattern = null;
-
-    // no precinct persons
-    if (dashArray !== null) {
-      var stripes = new L.StripePattern({color: precinctColor, angle: 20, weight: 6});
-      stripes.addTo(map);
-      fillPattern = stripes;
+function setUpMaps() {
+  var opts = {
+    style: function(feature) {
+      var precinctColor = getPrecinctColor(feature);
+      var dashArray = getDashArray(feature);
+      var lineColor = '#777';
+      var fillPattern = null;
+  
+      // no precinct persons
+      if (dashArray !== null) {
+        var stripes = new L.StripePattern({color: precinctColor, angle: 20, weight: 6});
+        stripes.addTo(map);
+        fillPattern = stripes;
+      }
+  
+      return {
+        color: lineColor,
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.2,
+        fillColor: precinctColor,
+        fillPattern: fillPattern,
+        dashArray: dashArray
+      };
+    },
+    onEachFeature: eachPrecinctFeature
+  };
+  
+  geojson = L.geoJson.ajax('douglas-county-precincts-2018.geojson', opts);
+  geojson.on('data:loaded', function() {
+    $('#mask').ploading({action: 'hide'});
+    $('#mask').hide();
+    precincts.sort(function(a,b) { return a - b });
+    makePrecinctSelector();
+    // populate form from url params if present
+    var urlHashParams = getJsonFromUrl(true);
+    if (urlHashParams['precinct']) {
+      showPrecinct(urlHashParams['precinct']);
     }
-
-    return {
-      color: lineColor,
-      weight: 1,
-      opacity: 1,
-      fillOpacity: 0.2,
-      fillColor: precinctColor,
-      fillPattern: fillPattern,
-      dashArray: dashArray
-    };
-  },
-  onEachFeature: eachPrecinctFeature
-};
-
-geojson = L.geoJson.ajax('douglas-county-precincts-2018.geojson', opts);
-geojson.on('data:loaded', function() {
-  $('#mask').ploading({action: 'hide'});
-  $('#mask').hide();
-  precincts.sort(function(a,b) { return a - b });
-  makePrecinctSelector();
-  // populate form from url params if present
-  var urlHashParams = getJsonFromUrl(true);
-  if (urlHashParams['precinct']) {
-    showPrecinct(urlHashParams['precinct']);
-  }
-  var urlQueryParams = getJsonFromUrl();
-  if (urlQueryParams['precinct']) {
-    showPrecinct(urlQueryParams['precinct']);
-  }
-});
-
-var county_commission_layer = L.geoJson.ajax('CountyCommissionDistrict.geojson', {
-  style: {
-      color: 'red',
-      weight: 2,
-      opacity: 1,
-      fillOpacity: 0,
-  }
-});
-
-ks_house = L.geoJson.ajax('ks-house-2016.geojson', {
-  style: {
-    color: 'blue',
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0,
-  }
-});
-ks_senate = L.geoJson.ajax('ks-senate-2016.geojson', {
-  style: {
-    color: 'green',
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0,
-  }
-});
-
-// https://stackoverflow.com/questions/8486099/how-do-i-parse-a-url-query-parameters-in-javascript
-function getJsonFromUrl(hashBased) {
-  var query;
-  if(hashBased) {
-    var pos = location.href.indexOf("#");
-    if(pos==-1) return [];
-    query = location.href.substr(pos+1);
-  } else {
-    query = location.search.substr(1);
-  }
-  var result = {};
-  query.split("&").forEach(function(part) {
-    if(!part) return;
-    part = part.split("+").join(" "); // replace every + with space, regexp-free version
-    var eq = part.indexOf("=");
-    var key = eq>-1 ? part.substr(0,eq) : part;
-    var val = eq>-1 ? decodeURIComponent(part.substr(eq+1)) : "";
-    var from = key.indexOf("[");
-    if(from==-1) result[decodeURIComponent(key)] = val;
-    else {
-      var to = key.indexOf("]",from);
-      var index = decodeURIComponent(key.substring(from+1,to));
-      key = decodeURIComponent(key.substring(0,from));
-      if(!result[key]) result[key] = [];
-      if(!index) result[key].push(val);
-      else result[key][index] = val;
+    var urlQueryParams = getJsonFromUrl();
+    if (urlQueryParams['precinct']) {
+      showPrecinct(urlQueryParams['precinct']);
     }
   });
-  return result;
+  
+  var county_commission_layer = L.geoJson.ajax('CountyCommissionDistrict.geojson', {
+    style: {
+        color: 'red',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0,
+    }
+  });
+  
+  ks_house = L.geoJson.ajax('ks-house-2016.geojson', {
+    style: {
+      color: 'blue',
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0,
+    }
+  });
+  ks_senate = L.geoJson.ajax('ks-senate-2016.geojson', {
+    style: {
+      color: 'green',
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0,
+    }
+  });
+
+  var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+      '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+      'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+  
+  var streets = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
+  
+  var popup = L.popup();
+  
+  function onMapClick(e) {
+    popup
+      .setLatLng(e.latlng)
+      .setContent("You clicked the map at " + e.latlng.toString())
+      .openOn(map);
+  }
+  
+  map = L.map('map', {
+    center: [38.91, -95.25],
+    zoom: 10,
+    layers: [streets, county_commission_layer, ks_house, ks_senate, geojson]
+  });
+  
+  //map.on('click', onMapClick);
+  
+  // control that shows state info on hover
+  info = L.control();
+  info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info');
+    this.update();
+    return this._div;
+  };
+  
+  info.update = function (props) {
+    this._div.innerHTML = '<h4>Precinct</h4>' +  (props ?  (props.NAME || props.PRECINCTID || props.name) : 'Click on a precinct');
+  };
+  
+  info.addTo(map);
+
 }
-
-var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-  mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
-
-var streets = L.tileLayer(mbUrl, {id: 'mapbox.streets',   attribution: mbAttr});
-
-var popup = L.popup();
-
-function onMapClick(e) {
-  popup
-    .setLatLng(e.latlng)
-    .setContent("You clicked the map at " + e.latlng.toString())
-    .openOn(map);
-}
-
-map = L.map('map', {
-  center: [38.91, -95.25],
-  zoom: 10,
-  layers: [streets, county_commission_layer, ks_house, ks_senate, geojson]
-});
-
-//map.on('click', onMapClick);
-
-// control that shows state info on hover
-info = L.control();
-info.onAdd = function (map) {
-  this._div = L.DomUtil.create('div', 'info');
-  this.update();
-  return this._div;
-};
-
-info.update = function (props) {
-  this._div.innerHTML = '<h4>Precinct</h4>' +  (props ?  (props.NAME || props.PRECINCTID || props.name) : 'Click on a precinct');
-};
-
-info.addTo(map);
 
 var address_lookup_string = function() {
   var $addr = $('#street-address').val();

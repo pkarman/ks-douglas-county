@@ -36,6 +36,7 @@ def make_vtd_to_pcp
       end
     end
   end
+  @vtd2pcp.each { |vtd, people| people.uniq! }
 end
 
 make_vtd_to_pcp
