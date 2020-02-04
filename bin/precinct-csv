@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'csv'
+require 'pp'
+
+# make a csv of precinct,ward
+
+wards = JSON.parse(File.read('wards.json'))
+
+p2w = {}
+wards.keys.each do |ward_name|
+  ward = wards[ward_name]
+  ward['precincts'].each do |precinct_name|
+    p2w[precinct_name] = ward_name
+  end
+end
+
+csv_string = CSV.generate do |csv|
+  p2w.keys.sort.each do |precinct_name|
+    ward_name = p2w[precinct_name]
+    csv << [precinct_name, ward_name]
+  end
+end
+
+puts csv_string

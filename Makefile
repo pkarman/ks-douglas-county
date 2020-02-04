@@ -24,6 +24,9 @@ districts:
 ward-table:
 	ruby bin/ward-list-maker > wards.html
 
+precinct-csv:
+	ruby bin/precinct-csv
+
 turnout:
 	ruby bin/turnout-by-pcp
 
